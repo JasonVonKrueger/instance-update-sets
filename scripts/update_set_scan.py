@@ -5,7 +5,7 @@ ServiceNow Update Set XML Reviewer
 Scans update set XML files for common issues and anti-patterns.
 Exits with code 1 if any critical issues are found.
 
-Assumes the standard ServiceNow "Retrieve Update Set" / GitLabCommitter export
+Assumes the standard ServiceNow "Retrieve Update Set" / GitHubCommitter export
 shape: ONE <?xml?> document, ONE <unload> root, with <sys_update_xml> records
 nested as children (not multiple concatenated documents).
 """
@@ -45,7 +45,7 @@ SECRET_PATTERNS = [
     (r'AKIA[0-9A-Z]{16}',                       'Possible AWS access key ID'),
     (r'-----BEGIN [A-Z ]*PRIVATE KEY-----',     'Embedded private key'),
     (r'\bgh[pousr]_[A-Za-z0-9]{20,}\b',         'Possible GitHub token'),
-    (r'\bglpat-[A-Za-z0-9\-_]{20,}\b',          'Possible GitLab personal access token'),
+    (r'\bglpat-[A-Za-z0-9\-_]{20,}\b',          'Possible Git personal access token'),
     (r'eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}', 'Possible JWT token'),
 ]
 
