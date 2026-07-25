@@ -10,6 +10,11 @@ description = "Allow ServiceNow sys_id values used as document keys in update-se
 # reference records by their sys_id, a 32-character hexadecimal identifier.
 # These are internal record references, not secrets, and would otherwise
 # trigger the generic-api-key rule.
+#
+# regexTarget = "match" ensures the regex is tested against the full matched
+# string (e.g. `document_key=<hex32>`) rather than just the captured secret
+# value (the bare hex string), which is the gitleaks v8 default behavior.
+regexTarget = "match"
 regexes = [
     '''document_key=[0-9a-f]{32}''',
     '''documentkey=[0-9a-f]{32}''',
