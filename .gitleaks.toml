@@ -1,0 +1,16 @@
+title = "Gitleaks Configuration"
+
+[extend]
+# Extend the default gitleaks ruleset so all built-in rules remain active.
+useDefault = true
+
+[allowlist]
+description = "Allow ServiceNow sys_id values used as document keys in update-set XML files"
+# ServiceNow update-set XML files use document_key / documentkey attributes to
+# reference records by their sys_id, a 32-character hexadecimal identifier.
+# These are internal record references, not secrets, and would otherwise
+# trigger the generic-api-key rule.
+regexes = [
+    '''document_key=[0-9a-f]{32}''',
+    '''documentkey=[0-9a-f]{32}''',
+]
