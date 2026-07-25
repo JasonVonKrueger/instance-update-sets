@@ -36,7 +36,6 @@ jobs:
   update-set-scan:
     name: Scan update set XML
     runs-on: ubuntu-latest
-    needs: gitleaks
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
