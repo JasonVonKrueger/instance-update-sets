@@ -1,0 +1,53 @@
+name: Move update sets on merge to main
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  move-update-sets:
+    # only run if the PR was actually merged (not just closed), and came from pending-review
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'pending-review'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Move XML files into update-sets/
+        id: move
+        run: |
+          mkdir -p update-sets
+          moved_any=false
+
+          # Adjust this find path if your update set XML files land somewhere
+          # other than the repo root when committed to pending-review.
+          while IFS= read -r -d '' file; do
+            filename=$(basename "$file")
+            git mv "$file" "update-sets/$filename"
+            moved_any=true
+            echo "Moved $file -> update-sets/$filename"
+          done < <(find . -maxdepth 1 -type f -name "*.xml" -print0)
+
+          echo "moved_any=$moved_any" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push
+        if: steps.move.outputs.moved_any == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "Move update set XML files into update-sets/ [skip ci]"
+          git push origin main
+
+      - name: No files to move
+        if: steps.move.outputs.moved_any == 'false'
+        run: echo "No .xml files found at repo root to move. Nothing to do."
