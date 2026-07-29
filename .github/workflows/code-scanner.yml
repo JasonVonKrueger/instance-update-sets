@@ -1,11 +1,11 @@
 name: Code Scanner + Copilot Review
 
 on:
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
   pull_request:
     branches: [main]
-  workflow_dispatch: {}
+  # workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -13,11 +13,11 @@ permissions:
   issues: write
 
 jobs:
-  gitleaks:
-    # ... existing gitleaks job ...
+  # gitleaks:
+  #   # ... existing gitleaks job ...
 
-  update-set-scan:
-    # ... existing update-set-scan job ...
+  # update-set-scan:
+  #   # ... existing update-set-scan job ...
 
   copilot-review:
     name: Copilot AI Review
