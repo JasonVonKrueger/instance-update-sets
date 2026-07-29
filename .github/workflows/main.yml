@@ -1,0 +1,48 @@
+name: Auto PR pending-review to main
+
+on:
+  push:
+    branches:
+      - pending-review
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for existing open PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=$(gh pr list \
+            --base main \
+            --head pending-review \
+            --state open \
+            --json number \
+            --jq '.[0].number')
+          echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+
+      - name: Create pull request
+        if: steps.check_pr.outputs.pr_number == ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head pending-review \
+            --title "Promote update sets: pending-review to main" \
+            --body "Auto-generated pull request to promote committed update sets from \`pending-review\` into \`main\`. Please review Copilot's comments before merging." \
+            --label "update-set"
+
+      - name: Skip if PR already exists
+        if: steps.check_pr.outputs.pr_number != ''
+        run: echo "An open PR (#${{ steps.check_pr.outputs.pr_number }}) already exists from pending-review to main. Skipping creation."
