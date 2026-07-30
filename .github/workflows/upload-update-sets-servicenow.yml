@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "update_sets/**/*.xml"
+      - "update-sets/**/*.xml"
 
 jobs:
   scan-update-set:
@@ -30,12 +30,12 @@ jobs:
 
           if [ -z "$BEFORE_SHA" ]; then
             echo "No comparison point available - scanning all XML files"
-            CHANGED_FILES=$(find update_sets -name '*.xml' 2>/dev/null)
+            CHANGED_FILES=$(find update-sets -name '*.xml' 2>/dev/null)
           else
-            CHANGED_FILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" -- 'update_sets/' 2>/dev/null | grep '\.xml$' || true)
+            CHANGED_FILES=$(git diff --name-only "$BEFORE_SHA" "${{ github.sha }}" -- 'update-sets/' 2>/dev/null | grep '\.xml$' || true)
             if [ -z "$CHANGED_FILES" ]; then
               echo "git diff against $BEFORE_SHA produced nothing usable — scanning all XML files as fallback"
-              CHANGED_FILES=$(find update_sets -name '*.xml' 2>/dev/null)
+              CHANGED_FILES=$(find update-sets -name '*.xml' 2>/dev/null)
             fi
           fi
 
@@ -82,7 +82,7 @@ jobs:
           name: changed-update-sets
           path: |
             changed_files.txt
-            update_sets/*.xml
+            update-sets/*.xml
           if-no-files-found: warn
 
   upload-to-servicenow:
@@ -119,7 +119,7 @@ jobs:
               -u "$SN_USERNAME:$SN_PASSWORD" \
               -H "Content-Type: application/xml" \
               --data-binary "@$FILE" \
-              "$SN_TARGET_INSTANCE/api/global/update_set_processor/import")
+              "$SN_TARGET_INSTANCE/api/global/update-set_processor/import")
 
             echo "Response: $(cat /tmp/sn_response.txt)"
             echo "HTTP status: $HTTP_CODE"
