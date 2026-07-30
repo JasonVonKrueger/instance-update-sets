@@ -1,0 +1,27 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-update-set:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Validate XML
+        run: |
+          # your validation logic here
+
+      - name: Move XML into update-sets directory
+        run: |
+          mkdir -p update-sets
+          mv *.xml update-sets/
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add update-sets/
+          git commit -m "Move update set into update-sets directory"
+          git push
