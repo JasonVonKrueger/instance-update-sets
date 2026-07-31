@@ -8,24 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: Validate XML
-        run: |
-          # your validation logic here
-
-      - name: Move XML into update-sets directory
-        run: |
-          mkdir -p update-sets
-          shopt -s nullglob
-          xml_files=( *.xml )
-
-          if [ ${#xml_files[@]} -eq 0 ]; then
-            echo "No XML files found in the repository root."
-            exit 1
-          fi
-
-          mv "${xml_files[@]}" update-sets/
-
+      
       - name: Commit changes
         run: |
           git config user.name "github-actions"
