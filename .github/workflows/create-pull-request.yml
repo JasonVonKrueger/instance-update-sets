@@ -1,0 +1,28 @@
+name: Auto-create pull request
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "${{ github.ref_name }}" \
+            --title "Merge ${{ github.ref_name }} into main" \
+            --body "Auto-generated pull request triggered by a commit to \`${{ github.ref_name }}\`." \
+            || echo "PR already exists for this branch — skipping."
