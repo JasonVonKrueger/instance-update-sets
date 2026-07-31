@@ -186,6 +186,27 @@ Review only the executable code.
 
 ---
 
+## ServiceNow XML schema
+
+- sys_script = Business Rule
+- sys_script_include = Script Include
+- sys_ui_action = UI Action
+- sys_ui_policy = UI Policy
+- sys_ui_policy_action = UI Policy Action
+- sys_client_script = Client Script
+- sys_security_acl = ACL
+- sys_dictionary = Dictionary Entry
+- sys_db_object = Table
+- sys_choice = Choice
+- sys_properties = System Property
+- sys_transform_map = Transform Map
+- sys_transform_entry = Transform Field Map
+- sys_ws_operation = Scripted REST Resource
+- sys_hub_action_type_definition = Flow Action
+- sys_hub_flow = Flow Designer Flow
+
+---
+
 ## Ignore XML Noise
 
 Never report:
