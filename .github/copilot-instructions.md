@@ -1,328 +1,208 @@
-# ServiceNow Code Review Instructions
+# ServiceNow Update Set Review Instructions
 
-You are performing a senior-level ServiceNow code review.
+## Repository Model
 
-Your objective is to identify bugs, security issues, maintainability problems, platform anti-patterns, and opportunities to improve readability while preserving existing functionality.
+This repository contains ServiceNow artifacts exported as XML records.
 
----
+Do **not** review the XML structure itself.
 
-# Review Priorities
+Instead, treat each XML file as though it represents the actual ServiceNow artifact stored in the platform.
 
-Prioritize findings in this order:
+Ignore XML serialization details including:
 
-1. Security
-2. Data integrity
-3. Upgrade safety
-4. Performance
-5. Maintainability
-6. Readability
-7. Style
+- sys_id
+- sys_created_by
+- sys_created_on
+- sys_updated_by
+- sys_updated_on
+- sys_mod_count
+- update_name
+- payload formatting
+- XML element ordering
+- CDATA wrappers
 
-Do not suggest stylistic changes unless they improve maintainability.
-
----
-
-# General Rules
-
-Review code as an experienced ServiceNow architect.
-
-Prefer platform best practices over JavaScript best practices when they conflict.
-
-Avoid suggestions that require plugins unless explicitly requested.
-
-Avoid recommending unsupported or undocumented APIs.
-
-Assume code may execute on large enterprise instances.
+Focus only on the artifact represented by the XML.
 
 ---
 
-# Verify
+## Artifact Extraction
 
-Look for:
+When reviewing a record, mentally reconstruct the artifact before performing analysis.
 
-- Null pointer risks
-- Undefined variables
-- Missing error handling
-- Incorrect GlideRecord usage
-- Incorrect GlideAggregate usage
-- Missing query filters
-- Missing setLimit()
-- Missing orderBy()
-- Recursive Business Rules
-- Infinite loops
-- Race conditions
-- Duplicate queries
-- Hardcoded values
-- Magic strings
-- Magic numbers
-- Dead code
-- Unused variables
-- Unreachable code
-- Incorrect return values
+For example:
+
+### sys_script.xml
+
+Treat the following fields as one Business Rule:
+
+- script
+- condition
+- when
+- order
+- active
+- filter_condition
+- collection
+- action_* fields
+
+Review these fields together as a complete Business Rule.
 
 ---
 
-# GlideRecord
+### sys_script_include.xml
 
-Verify:
+Treat these fields as a JavaScript class:
 
-- initialize() used appropriately
-- query() before next()
-- get() checked for success
-- update() only when needed
-- insert() return values checked
-- deleteRecord() appropriate
-- addQuery() uses indexed fields where possible
-- Encoded queries are readable
-- Large table scans avoided
+- script
+- api_name
+- name
+- client_callable
+- accessible_from
+- extends
 
-Flag:
-
-- query() inside loops
-- update() inside loops
-- insert() inside loops
-- deleteRecord() inside loops
-- GlideRecord created repeatedly
-- Multiple queries that can be combined
+Ignore surrounding XML.
 
 ---
 
-# Business Rules
+### sys_ui_action.xml
 
-Check for:
+Treat as a complete UI Action using:
 
-- Proper conditions
-- Recursion prevention
-- current.operation()
-- current.isNewRecord()
-- current.changes()
-- previous usage
-- async suitability
-- before vs after correctness
-
-Warn when:
-
-- Business Rule could be Flow Designer
-- Business Rule performs excessive processing
-- Business Rule performs integrations synchronously
+- script
+- condition
+- onclick
+- form_action
+- list_action
+- client
+- active
 
 ---
 
-# Script Includes
+### sys_ui_policy.xml
 
-Verify:
+Combine:
 
-- Single responsibility
-- Public vs private methods
-- Proper inheritance
-- Class names match records
-- Stateless design
-- Reusable methods
-- Avoid duplicated logic
+- conditions
+- actions
+- scripts
+
+into a single UI Policy.
 
 ---
 
-# Client Scripts
+### sys_client_script.xml
 
-Verify:
+Treat the script independently of XML.
 
-- No GlideRecord
-- No gs.*
-- Minimize GlideAjax calls
-- Proper asynchronous behavior
-- Avoid unnecessary DOM manipulation
+Review according to Client Script best practices.
 
 ---
 
-# GlideAjax
+### sys_properties.xml
 
-Verify:
+Review the property itself rather than XML formatting.
 
-- Parameter validation
-- Client callable settings
-- Minimal payload
-- Error handling
+Determine whether:
 
----
-
-# Security
-
-Identify:
-
-- ACL bypasses
-- Unvalidated input
-- Cross-scope issues
-- Injection risks
-- Information disclosure
-- Sensitive logging
-- Hardcoded credentials
-- Improper impersonation
-- Unauthorized GlideRecord access
+- naming is appropriate
+- default value is safe
+- property should be documented
+- security implications exist
 
 ---
 
-# Performance
+### sys_dictionary.xml
 
-Look for:
+Treat this as a Dictionary Entry.
 
-- Nested loops
-- Nested queries
-- Large object creation
-- Duplicate GlideRecords
-- Unnecessary JSON parsing
-- Repeated GlideDateTime creation
-- Excessive gs.log()
-- Expensive regex
+Review:
 
-Recommend batching where appropriate.
-
----
-
-# Logging
-
-Recommend:
-
-- gs.error() for errors
-- gs.warn() for warnings
-- gs.info() sparingly
-
-Avoid:
-
-- Debug logging in production
-- Logging sensitive data
-- Logging entire GlideRecords
+- field type
+- attributes
+- indexing
+- default values
+- reference qualifiers
+- choice handling
+- auditing
+- encryption
 
 ---
 
-# Error Handling
+### ACL Records
 
-Verify:
+Review the ACL logic using:
 
-- try/catch where appropriate
-- Useful error messages
-- Errors are not swallowed
-- Transaction integrity maintained
+- operation
+- condition
+- script
+- roles
+- requires_role
 
----
-
-# Update Set Safety
-
-Identify changes that may:
-
-- Break existing functionality
-- Change dictionary behavior
-- Modify ACLs
-- Affect integrations
-- Require data migration
+Do not review XML.
 
 ---
 
-# Scoped Apps
+### Scripted REST APIs
 
-Ensure:
+Reconstruct the API from:
 
-- Cross-scope access handled correctly
-- APIs supported in scope
-- No unnecessary global dependencies
+- resources
+- scripts
+- paths
+- HTTP methods
 
----
-
-# Flow Designer
-
-When reviewing Flow actions:
-
-Look for:
-
-- Unnecessary scripting
-- Duplicate logic
-- Poor error handling
-- Missing outputs
-- Missing rollback considerations
+Review as an API implementation.
 
 ---
 
-# Integration Code
+## Related XML Files
 
-Verify:
+Assume XML files are part of one application.
 
-- RESTMessageV2 usage
-- Timeout handling
-- Retry strategy
-- Authentication handling
-- Response validation
-- HTTP status handling
-- JSON parsing safety
+Cross-reference artifacts when appropriate.
 
----
+For example:
 
-# Maintainability
+- Business Rules calling Script Includes
+- UI Actions invoking Script Includes
+- Client Scripts using GlideAjax
+- Script Includes extending other Script Includes
+- Flow Actions invoking Script Includes
 
-Suggest improvements that:
-
-- Reduce duplication
-- Improve naming
-- Simplify branching
-- Reduce nesting
-- Extract reusable methods
-
-Do not recommend refactoring solely for personal preference.
+Mention possible cross-artifact issues when evidence exists.
 
 ---
 
-# Output Format
+## JavaScript Extraction
 
-Organize findings using the following sections.
+Most executable code exists inside CDATA blocks.
 
-## Critical Issues
+Treat CDATA contents exactly as JavaScript source files.
 
-Security vulnerabilities, data loss, upgrade risks.
+Ignore XML indentation.
 
-## High Priority
+Ignore escaped entities.
 
-Performance or correctness issues likely to affect production.
-
-## Medium Priority
-
-Maintainability or reliability improvements.
-
-## Low Priority
-
-Readability and minor cleanup.
-
-## Positive Observations
-
-Mention good architecture, reusable patterns, defensive coding, and well-designed implementations.
+Review only the executable code.
 
 ---
 
-# Confidence
+## Ignore XML Noise
 
-For every finding include:
+Never report:
 
-- Severity
-- Confidence (High / Medium / Low)
-- Explanation
-- Suggested fix
+- whitespace
+- indentation
+- XML formatting
+- element ordering
+- update metadata
+- export formatting
 
-Do not speculate.
-
-Only report issues supported by evidence in the code.
-
-If uncertain, explicitly state why.
+These are serialization artifacts.
 
 ---
 
-# Review Philosophy
+## Review Goal
 
-Prefer:
+Always review the logical ServiceNow artifact, **not** the XML document.
 
-- Simple code
-- Platform-native solutions
-- Upgrade-safe approaches
-- Readability over cleverness
-- Reuse over duplication
-- Configuration over customization
-
-Assume the code will be maintained by another developer in five years.
-
-Always explain *why* a recommendation improves the platform.
+Pretend every XML file has already been imported into a ServiceNow instance and you are reviewing the resulting record directly from the platform.
