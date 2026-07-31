@@ -16,7 +16,15 @@ jobs:
       - name: Move XML into update-sets directory
         run: |
           mkdir -p update-sets
-          mv *.xml update-sets/
+          shopt -s nullglob
+          xml_files=( *.xml )
+
+          if [ ${#xml_files[@]} -eq 0 ]; then
+            echo "No XML files found in the repository root."
+            exit 1
+          fi
+
+          mv "${xml_files[@]}" update-sets/
 
       - name: Commit changes
         run: |
