@@ -531,7 +531,7 @@ summary { &#13;
 
 	function getTypes() {
 		var gr = new GlideRecord('sys_update_xml');
-		gr.addEncodedQuery('update_set', current_set);
+		gr.addQuery('update_set', current_set);
 		gr.orderBy('type');
 		gr.query();
 
