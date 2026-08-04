@@ -6,7 +6,7 @@ This repository contains ServiceNow artifacts exported as XML records.
 
 Do **not** review the XML structure itself.
 
-Instead, treat each XML file as though it represents the actual ServiceNow artifact stored in the platform.
+Instead, treat each XML file as though it represents the actual ServiceNow artifact stored in the platform. The goal is to review artifacts exactly as if they were already imported into a ServiceNow instance.
 
 Ignore XML serialization details including:
 
