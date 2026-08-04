@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-08-04 14:33:13">
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget"><sp_widget action="INSERT_OR_UPDATE"><category>custom</category><client_script><![CDATA[function($scope, $rootScope, $location, spUtil, spModal, $timeout) {
+	var c = this;
+	var selectedElement = null;
+
+	// add a new file tab when a file type is selected
+	c.onNewFileSelect = function(file_type) {
+		c.server.get({
+			action: 'getFileInfo',
+			file_type: file_type
+		}).then(function(result) {
+			document.getElementById('new_file_picker').value = '';
+			c.addTab(result.data.file_info, -1, 'New File');
+		});	
+	}	
+	
+	// refresh the file tree
+	// ToDo: need to figure out how to auto-refresh
+	c.refresh = function() {
+		spUtil.update($scope);
+	}
+
+	c.filetype = {
+		displayValue: c.data.set_name,
+		value: c.data.set_sysid, 
+		name: 'updateset'	
+	}
+
+	c.addTab = function(table_name, sys_id, file_name) {
+		// highlight the selected file
+		// var clickedElement = document.getElementById(sys_id);
+		// if (selectedElement) selectedElement.classList.remove('selected');		
+		// clickedElement.classList.add('selected');
+		// selectedElement = clickedElement;
+
+		var obj = {
+			id: 'update_set_studio',
+			sys_id: sys_id,
+			table: table_name,
+			file_name: file_name
+		};
+
+		$rootScope.$broadcast('addTabEvent', obj);
+	}
+
+
+	/***********************************************
+	Code for a potential update set picker. I stuck it here to get it out of the way.
+
+	The sn-record-picker below would, of course, go in the HTML
+
+      <sn-record-picker style="display: none;" id="updateset" field="c.updateset" table="'sys_update_set'"
+                        display-field="'name'"
+                        value-field="'sys_id'" 
+                        search-fields="name" page-size="100" on-change="onChange()"></sn-record-picker>
+
+	// obviously this listener needs work	
+	// listen for update set changes
+	$scope.$on("field.change", function(evt, parms) {
+		if (parms.field.name == 'updateset') {
+			//if (parms.field.newValue != parms.field.oldValue) {
+			//console.log(JSON.stringify(parms));
+
+			c.server.get({
+				action: 'change_update_set',
+				updateset: c.updateset.value,
+			}).then(function(response) {
+				console.log(response.data.retdata);
+			});		
+			//}
+		}
+	});
+	************************************************/	
+}]]></client_script><controller_as>c</controller_as><css>#XXtop {&#13;
+  padding: 15px; &#13;
+  max-height: 100%;&#13;
+  min-height: 100%;&#13;
+  height: 100%;&#13;
+}&#13;
+&#13;
+.set-info {&#13;
+  font-size: 1.5rem; &#13;
+}&#13;
+&#13;
+.new-file {&#13;
+  font-size: 1.65rem;&#13;
+  font-weight: 900;&#13;
+  color: #00adb5;&#13;
+}&#13;
+&#13;
+#new_file_picker {&#13;
+  width: 95%;&#13;
+  font-size: 1.2rem;&#13;
+  color: #222;&#13;
+  background: #fff;&#13;
+  border-color: #fff;&#13;
+  border-radius: 4px;&#13;
+  padding-left: 5px;&#13;
+}&#13;
+&#13;
+#refresh {&#13;
+  color: #aaa;&#13;
+  font-size: 2rem; &#13;
+}&#13;
+&#13;
+#refresh:hover {&#13;
+  color: #fff;&#13;
+  cursor: pointer; &#13;
+}&#13;
+&#13;
+.new-file-container {&#13;
+  display: flex;&#13;
+  flex-direction: row;&#13;
+  width: 100%;&#13;
+  height: 40px;&#13;
+  margin-top: 10px;&#13;
+  align-items: center;&#13;
+}&#13;
+&#13;
+.selected {&#13;
+  font-weight: 100;&#13;
+  font-style: italic;&#13;
+}&#13;
+&#13;
+summary { &#13;
+  cursor: pointer; &#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+.tree {&#13;
+  position: relative;&#13;
+  margin-top: .5rem;&#13;
+  font-weight: 400;&#13;
+  line-height: 1.2;&#13;
+  color: #ddd;&#13;
+&#13;
+  ul {&#13;
+    padding-left: 5px;&#13;
+    list-style: none;&#13;
+    letter-spacing: -1px;&#13;
+&#13;
+    li {&#13;
+      position: relative;&#13;
+      padding-top: 5px;&#13;
+      padding-bottom: 0;&#13;
+      padding-left: 15px;&#13;
+      box-sizing: border-box;&#13;
+      user-select: none;&#13;
+      letter-spacing: -1px;&#13;
+&#13;
+      &amp;:before {&#13;
+        position: absolute;&#13;
+        top: 15px;&#13;
+        left: 0;&#13;
+        width: 10px;&#13;
+        height: 1px;&#13;
+        margin: auto;&#13;
+        content: '';&#13;
+        background-color: #ccc;&#13;
+      }&#13;
+&#13;
+      &amp;:after {&#13;
+        position: absolute;&#13;
+        top: 0;&#13;
+        bottom: 0;&#13;
+        left: 0;&#13;
+        width: 1px;&#13;
+        height: 100%;&#13;
+        content: '';&#13;
+        background-color: #ccc;&#13;
+      }&#13;
+&#13;
+      &amp;:last-child:after {&#13;
+        height: 15px;&#13;
+      }&#13;
+    }&#13;
+  }&#13;
+}</css><data_table>sp_instance</data_table><demo_data/><description>This is the Global Update Set Studio tree widget.. &#13;
+&#13;
+testikng&#13;
+&#13;
+&lt;div id="top" style="width: 100%; height: 100%;"&gt;</description><docs/><field_list/><has_preview>true</has_preview><id>guss-tree</id><internal>false</internal><link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link><name>GUSS - Tree</name><option_schema/><public>false</public><roles/><script><![CDATA[(function() {
+	var au = new ArrayUtil();
+	var current_set = (new GlideUpdateSet()).get();
+	var set_info = getSetInfo(current_set);
+	var set  = [];
+	var folders = getFolders(current_set);
+
+	data.set_name = set_info.name;
+	data.set_scope = set_info.app_scope;
+	data.set_sysid = set_info.sysid;
+	data.retdata = set_info.name;
+	data.selectedRecords = [];
+	
+	if (input) {
+		if (input.action == 'getFileInfo') {
+			data.file_info = getFileInfo(input.file_type);
+		}
+	}
+
+	var gr = new GlideAggregate('sys_update_xml'); 
+	gr.groupBy('type'); 
+	gr.query(); 
+
+	while (gr.next()) { 
+		data.selectedRecords.push(gr.getValue('type')); 
+	} 	
+
+
+	// get the files for each folder type
+	folders.forEach(function(folder) {
+		var o = {};
+		o.folder = folder;
+		o.files = getFiles(current_set, folder);
+		set.push(o);
+	});
+
+	data.folders = set;
+
+	function getFileInfo(file_type) {
+		var gr = new GlideRecord('sys_update_xml');
+		gr.addEncodedQuery('type=' + file_type);
+		gr.setLimit(1);
+		gr.query();
+
+		var files = [];
+		if (gr.next()) {
+			var name = gr.getValue('name');
+			var o = {};
+
+			try {
+				// get the update's table and sys_id from the payload
+				var payload = gr.payload;
+				var xmlDoc = new XMLDocument2();
+				xmlDoc.parseXML(payload);
+
+				o.table_name = (xmlDoc.getFirstNode('//sys_class_name')).getTextContent();
+				return o.table_name;
+
+			} catch (err) {
+				//console.log('GUSS: Failed to load ' + name);
+			} finally {
+				files.push(o);
+			}
+		}
+
+		return files;
+	}
+
+	function getFolders(update_set) {
+		var gr = new GlideRecord('sys_update_xml');
+		//gr.addEncodedQuery('update_set=' + update_set + '^typeIN' + options.file_types_display);
+		gr.addEncodedQuery('update_set=' + update_set);
+		gr.orderBy('type');
+		gr.query();
+
+		var folders = [];
+		while (gr.next()) {
+			var type = gr.getValue('type');
+
+			if (!au.contains(folders, type)) {
+				folders.push(type);
+			}	
+		}
+
+		return folders;
+	}
+
+	function getFiles(update_set, type) {
+		var gr = new GlideRecord('sys_update_xml');
+		gr.addEncodedQuery('update_set=' + update_set + '^type=' + type + '^action!=delete');
+		gr.orderBy('target_name');
+		gr.query();	
+
+		var files = [];
+		while (gr.next()) {
+			var name = gr.getValue('name');
+			var o = {};
+
+			try {
+				// get the update's table and sys_id from the payload
+				var payload = gr.payload;
+				var xmlDoc = new XMLDocument2();
+				xmlDoc.parseXML(payload);
+
+				o.target_name = gr.getValue('target_name');
+				o.table_name = (xmlDoc.getFirstNode('//sys_class_name')).getTextContent();
+				o.sys_id = (xmlDoc.getFirstNode('//sys_id')).getTextContent();
+				o.file_name = getFileName(o.table_name, o.sys_id);					
+			}
+			catch(err) {
+				console.log('GUSS: Failed to load ' + name);
+			}
+			finally {
+				files.push(o);	
+			}
+		}
+
+		return files;
+	}
+
+	function getSetInfo(set) {
+		var gr = new GlideRecord('sys_update_set');
+		if (gr.get(set)) {
+			return { name: gr.getValue('name'),
+							app_scope: gr.getValue('application'),
+							sysid: gr.getValue('sys_id') };
+		}
+
+		return false;
+	}
+
+	function getTypes() {
+		var gr = new GlideRecord('sys_update_xml');
+		gr.addEncodedQuery('update_set', current_set);
+		gr.orderBy('type');
+		gr.query();
+
+		var types = [];
+		while (gr.next()) {
+			var t = gr.getValue('type');
+
+			if (!au.contains(log, t)) {
+				types.push(t);
+			}
+
+		}
+
+		return types;
+	}
+
+	function getFileName(table, sys_id) {
+		var gr = new GlideRecord(table);
+		if (gr.get(sys_id)) {
+			return gr.getDisplayValue();
+		}
+	}
+
+})();]]></script><servicenow>false</servicenow><sys_class_name>sp_widget</sys_class_name><sys_created_by>nervous_sow</sys_created_by><sys_created_on>2024-10-19 13:17:29</sys_created_on><sys_id>3153ca1a83d95a10dd00cbb6feaad3db</sys_id><sys_mod_count>357</sys_mod_count><sys_name>GUSS - Tree</sys_name><sys_package display_value="G.U.S.S" source="32910a1e83d95a10dd00cbb6feaad39c">32910a1e83d95a10dd00cbb6feaad39c</sys_package><sys_policy/><sys_scope display_value="G.U.S.S">32910a1e83d95a10dd00cbb6feaad39c</sys_scope><sys_update_name>sp_widget_3153ca1a83d95a10dd00cbb6feaad3db</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-08-04 21:16:49</sys_updated_on><template><![CDATA[
+<div class="set-info">
+  <div>
+    <span>Application scope:</span> {{c.data.set_scope}}
+  </div> 
+
+  <div>
+    <span class="bold">Update set:</span> <a href="/now/nav/ui/classic/params/target/sys_update_set.do%3Fsys_id%3D{{c.data.set_sysid}}" target="_blank">{{c.data.set_name}}</a>
+    <!-- this is where the update set picker would go -->
+  </div>
+</div>
+
+<div class="new-file-container">
+  <div style="flex-grow: 8">
+    <input id="new_file_picker" class="input-sm"
+           type="text" 
+           ng-model="selected" 
+           uib-typeahead="item for item in c.data.selectedRecords | filter:$viewValue | limitTo:8" class="form-control" placeholder="New File..."
+           typeahead-min-length="2"
+           typeahead-on-select="c.onNewFileSelect($item)">
+  </div>
+  <div style="flex-grow: 2">
+    <i id="refresh" class="glyphicon glyphicon-refresh" ng-click="c.refresh()" title="Refresh this widget"></i>
+  </div>
+</div> 
+
+<div class="tree">
+  <ul>
+    <li ng-repeat="t in c.data.folders track by $index">
+      <details>
+        <summary class="bold"> {{t.folder}}</summary>
+        <ul>
+          <li ng-repeat="g in t.files" ng-click="c.addTab(g.table_name, g.sys_id, g.file_name)" id="{{g.sys_id}}"> {{g.target_name}}</li>
+          <li ng-click="c.addTab(t.files[0].table_name, -1, 'New file')" class="new-file">+</li>
+        </ul>
+      </details>
+    </li>      
+  </ul>
+</div> 
+
+]]></template></sp_widget><sys_es_latest_script action="INSERT_OR_UPDATE"><id>3153ca1a83d95a10dd00cbb6feaad3db</id><sys_created_by>nervous_sow</sys_created_by><sys_created_on>2024-10-19 13:24:22</sys_created_on><sys_id>66e44252831d5a10dd00cbb6feaad32b</sys_id><sys_mod_count>2</sys_mod_count><sys_updated_by>nervous_sow</sys_updated_by><sys_updated_on>2024-11-15 04:06:07</sys_updated_on><table>sp_widget</table><use_es_latest>false</use_es_latest></sys_es_latest_script></record_update>
+</unload>
