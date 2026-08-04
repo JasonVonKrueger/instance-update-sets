@@ -438,7 +438,7 @@ summary { &#13;
 
 	function getFileInfo(file_type) {
 		var gr = new GlideRecord('sys_update_xml');
-		gr.addEncodedQuery('type=' + file_type);
+		gr.addEncodedQuery('update_set=' + current_set + '^type=' + file_type + '^action!=delete');
 		gr.setLimit(1);
 		gr.query();
 
