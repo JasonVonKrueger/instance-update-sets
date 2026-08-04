@@ -286,6 +286,7 @@ Flag:
 - missing query limits
 - querying large tables inefficiently
 - retrieving unused fields
+- the use of gr as a GlideRecord variable
 
 Verify:
 
