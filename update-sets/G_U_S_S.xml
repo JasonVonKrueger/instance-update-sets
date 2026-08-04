@@ -658,10 +658,13 @@ summary { &#13;
 
 				// wait for the iframe to load and do stuff
 				iframe.addEventListener('load', function() {
-					// hide the form's back button and arrows
-					this.contentWindow.document.getElementsByClassName('btn btn-default icon-chevron-left navbar-btn')[0].style.display = 'none';
-					this.contentWindow.document.getElementsByClassName('icon-arrow-up')[0].style.display = 'none';
-					this.contentWindow.document.getElementsByClassName('icon-arrow-down')[0].style.display = 'none';	
+					var doc = this.contentWindow && this.contentWindow.document;
+					var back = doc && doc.getElementsByClassName('btn btn-default icon-chevron-left navbar-btn')[0];
+					if (back) back.style.display = 'none';
+					var up = doc && doc.getElementsByClassName('icon-arrow-up')[0];
+					if (up) up.style.display = 'none';
+					var down = doc && doc.getElementsByClassName('icon-arrow-down')[0];
+					if (down) down.style.display = 'none';	
 					
 					this.contentWindow.document.addEventListener('click', function(event) {
 						// we're trying to listen for the Save button to be clicked
