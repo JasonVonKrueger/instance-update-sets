@@ -417,10 +417,10 @@ summary { &#13;
 		}
 	}
 
-	var gr = new GlideAggregate('sys_update_xml'); 
-	gr.groupBy('type'); 
-	gr.query(); 
-
+	var gr = new GlideAggregate('sys_update_xml');
+	gr.addQuery('update_set', current_set);
+	gr.groupBy('type');
+	gr.query();
 	while (gr.next()) { 
 		data.selectedRecords.push(gr.getValue('type')); 
 	} 	
