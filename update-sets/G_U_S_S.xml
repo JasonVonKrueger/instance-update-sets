@@ -539,7 +539,7 @@ summary { &#13;
 		while (gr.next()) {
 			var t = gr.getValue('type');
 
-			if (!au.contains(log, t)) {
+			if (!au.contains(types, t)) {
 				types.push(t);
 			}
 
