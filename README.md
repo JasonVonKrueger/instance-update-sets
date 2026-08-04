@@ -14,8 +14,7 @@ It is intended to provide:
 
 ## Purpose
 
-ServiceNow update sets are often moved manually between instances, which can lead to drift and inconsistent deployments.  
-This repo helps standardize that process by treating update sets as deployable artifacts and tracking them in Git.
+ServiceNow update sets are often moved manually between instances, which can lead to drift and inconsistent deployments. This repo helps standardize that process by treating update sets as deployable artifacts and tracking them in Git.
 
 ## Repository Structure
 
