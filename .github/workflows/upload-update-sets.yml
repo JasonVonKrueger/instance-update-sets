@@ -1,0 +1,89 @@
+name: Upload Update Sets
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'update-sets/**/*.xml'
+
+jobs:
+  upload-update-sets:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine changed update set files
+        id: changed-files
+        shell: bash
+        run: |
+          BEFORE_SHA="${{ github.event.before }}"
+          AFTER_SHA="${{ github.sha }}"
+          if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+            git diff --name-only --diff-filter=AM "$BEFORE_SHA" "$AFTER_SHA" -- 'update-sets/**/*.xml' > changed_files.txt
+          else
+            find update-sets -type f -name '*.xml' | sort > changed_files.txt
+          fi
+
+          if [ -s changed_files.txt ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No update set XML files changed."
+          fi
+
+      - name: Upload update sets to ServiceNow
+        if: steps.changed-files.outputs.changed == 'true'
+        env:
+          SN_TARGET_INSTANCE: ${{ secrets.TEST_INSTANCE_URL }}
+          SN_USERNAME: ${{ secrets.TEST_USERNAME }}
+          SN_PASSWORD: ${{ secrets.TEST_PASSWORD }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "$SN_TARGET_INSTANCE" ] || [ -z "$SN_USERNAME" ] || [ -z "$SN_PASSWORD" ]; then
+            echo "Required ServiceNow secrets are not configured."
+            exit 1
+          fi
+
+          RESP_FILE="$(mktemp)"
+          trap 'rm -f "$RESP_FILE"' EXIT
+
+          while IFS= read -r FILE; do
+            [ -z "$FILE" ] && continue
+            echo "=== Uploading $FILE ==="
+
+            if [ ! -f "$FILE" ]; then
+              echo "ERROR: $FILE not found"
+              exit 1
+            fi
+
+            if ! HTTP_CODE=$(curl -sS --connect-timeout 10 --max-time 300 -o "$RESP_FILE" -w "%{http_code}" -X POST \
+              -u "$SN_USERNAME:$SN_PASSWORD" \
+              -H "Accept: application/json" \
+              -H "Content-Type: application/xml" \
+              --data-binary "@$FILE" \
+              "${SN_TARGET_INSTANCE%/}/api/global/update_set_processor/import"); then
+              echo "ERROR: Request failed for $FILE"
+              cat "$RESP_FILE" 2>/dev/null || true
+              exit 1
+            fi
+
+            echo "Response:"
+            cat "$RESP_FILE"
+            echo "HTTP status: $HTTP_CODE"
+
+            if ! [[ "$HTTP_CODE" =~ ^[0-9]{3}$ ]] || [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -gt 299 ]; then
+              echo "ERROR: Upload failed with HTTP $HTTP_CODE"
+              exit 1
+            fi
+
+            echo "Uploaded $FILE successfully"
+          done < changed_files.txt

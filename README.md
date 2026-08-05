@@ -70,6 +70,16 @@ Each deployment should include:
 5. Merge after validation and approval
 6. Execute deployment pipeline to target instance(s)
 
+## Automated Upload to ServiceNow
+
+When XML files under `update-sets/` are merged to `main`, GitHub Actions automatically uploads added or modified update set XML files to the target ServiceNow instance using the update set processor import API.
+
+Required GitHub repository secrets:
+
+- `TEST_INSTANCE_URL`
+- `TEST_USERNAME`
+- `TEST_PASSWORD`
+
 ## Security and Compliance
 
 - Do **not** commit credentials or secrets
