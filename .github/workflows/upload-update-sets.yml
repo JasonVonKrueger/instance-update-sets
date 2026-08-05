@@ -65,17 +65,22 @@ jobs:
               exit 1
             fi
 
-            HTTP_CODE=$(curl -sS -o /tmp/sn_response.txt -w "%{http_code}" -X POST \
+            if ! HTTP_CODE=$(curl -sS --connect-timeout 10 --max-time 300 -o "$RESP_FILE" -w "%{http_code}" -X POST \
               -u "$SN_USERNAME:$SN_PASSWORD" \
               -H "Accept: application/json" \
               -H "Content-Type: application/xml" \
               --data-binary "@$FILE" \
-              "${SN_TARGET_INSTANCE%/}/api/global/update_set_processor/import")
+              "${SN_TARGET_INSTANCE%/}/api/global/update_set_processor/import"); then
+              echo "ERROR: Request failed for $FILE"
+              cat "$RESP_FILE" 2>/dev/null || true
+              exit 1
+            fi
 
-            echo "Response: $(cat /tmp/sn_response.txt)"
+            echo "Response:"
+            cat "$RESP_FILE"
             echo "HTTP status: $HTTP_CODE"
 
-            if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -gt 299 ]; then
+            if ! [[ "$HTTP_CODE" =~ ^[0-9]{3}$ ]] || [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -gt 299 ]; then
               echo "ERROR: Upload failed with HTTP $HTTP_CODE"
               exit 1
             fi
