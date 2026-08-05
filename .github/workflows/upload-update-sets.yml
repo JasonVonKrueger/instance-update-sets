@@ -17,14 +17,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Determine changed update set files
         id: changed-files
         shell: bash
         run: |
-          if git rev-parse HEAD^ >/dev/null 2>&1; then
-            git diff --name-only --diff-filter=AM HEAD^ HEAD -- 'update-sets/**/*.xml' > changed_files.txt
+          BEFORE_SHA="${{ github.event.before }}"
+          AFTER_SHA="${{ github.sha }}"
+          if git cat-file -e "${BEFORE_SHA}^{commit}" 2>/dev/null; then
+            git diff --name-only --diff-filter=AM "$BEFORE_SHA" "$AFTER_SHA" -- 'update-sets/**/*.xml' > changed_files.txt
           else
             find update-sets -type f -name '*.xml' | sort > changed_files.txt
           fi
