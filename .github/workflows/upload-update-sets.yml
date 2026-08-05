@@ -46,10 +46,15 @@ jobs:
           SN_PASSWORD: ${{ secrets.TEST_PASSWORD }}
         shell: bash
         run: |
+          set -euo pipefail
+
           if [ -z "$SN_TARGET_INSTANCE" ] || [ -z "$SN_USERNAME" ] || [ -z "$SN_PASSWORD" ]; then
             echo "Required ServiceNow secrets are not configured."
             exit 1
           fi
+
+          RESP_FILE="$(mktemp)"
+          trap 'rm -f "$RESP_FILE"' EXIT
 
           while IFS= read -r FILE; do
             [ -z "$FILE" ] && continue
