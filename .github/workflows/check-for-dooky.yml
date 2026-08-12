@@ -1,0 +1,22 @@
+name: Check for banned word "dooky"
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  check-dooky:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Scan for banned word
+        run: |
+          echo "Scanning for the word 'dooky'..."
+          if grep -Rni "dooky" .; then
+            echo "::error::The word 'dooky' was found in the repository. Remove it before merging."
+            exit 1
+          else
+            echo "No banned words found."
+          fi
