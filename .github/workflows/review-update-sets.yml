@@ -1,0 +1,495 @@
+name: Review Update Sets
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    paths:
+      - 'update-sets/**/*.xml'
+
+concurrency:
+  group: review-update-sets-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+env:
+  # Poll Copilot review for up to 3 minutes to allow review comments to appear on the PR.
+  COPILOT_REVIEW_POLL_ATTEMPTS: 18
+  COPILOT_REVIEW_POLL_INTERVAL_MS: 10000
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    outputs:
+      files_json: ${{ steps.changed-files.outputs.files_json }}
+      has_changes: ${{ steps.changed-files.outputs.has_changes }}
+    steps:
+      - name: Determine changed update set XML files
+        id: changed-files
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+
+            const changedFiles = files
+              .filter((file) => file.filename.startsWith('update-sets/') && file.filename.endsWith('.xml'))
+              .filter((file) => ['added', 'modified', 'renamed'].includes(file.status))
+              .map((file) => file.filename)
+              .sort();
+
+            core.info(`Changed update set XML files: ${JSON.stringify(changedFiles, null, 2)}`);
+            core.setOutput('files_json', JSON.stringify(changedFiles));
+            core.setOutput('has_changes', changedFiles.length > 0 ? 'true' : 'false');
+
+  validate-xml:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      valid: ${{ steps.validate.outputs.valid }}
+      error_count: ${{ steps.validate.outputs.error_count }}
+    steps:
+      - name: Checkout pull request changes
+        uses: actions/checkout@v4
+
+      - name: Validate changed XML files
+        id: validate
+        env:
+          CHANGED_FILES_JSON: ${{ needs.detect-changes.outputs.files_json }}
+        shell: bash
+        run: |
+          python <<'PY'
+          import json
+          import os
+          import re
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          files = json.loads(os.environ['CHANGED_FILES_JSON'])
+          errors = []
+
+          for rel_path in files:
+              path = Path(rel_path)
+              try:
+                  xml_text = path.read_text(encoding='utf-8')
+                  normalized_xml = re.sub(r'<\?xml[^>]*\?>', '', xml_text).strip()
+                  ET.fromstring(normalized_xml)
+              except ET.ParseError as exc:
+                  errors.append({
+                      'file': rel_path,
+                      'message': str(exc),
+                  })
+
+          summary_lines = ['# XML validation results', '']
+          if errors:
+              summary_lines.append('Changed update set XML files failed validation:')
+              summary_lines.append('')
+              for error in errors:
+                  summary_lines.append(f"- `{error['file']}`: {error['message']}")
+              valid = 'false'
+          else:
+              summary_lines.append('All changed update set XML files are well-formed XML.')
+              valid = 'true'
+
+          Path('validation-results.json').write_text(json.dumps({
+              'valid': valid == 'true',
+              'error_count': len(errors),
+              'errors': errors,
+          }, indent=2))
+          Path('validation-summary.md').write_text('\n'.join(summary_lines) + '\n')
+
+          github_output = Path(os.environ['GITHUB_OUTPUT'])
+          with github_output.open('a', encoding='utf-8') as fh:
+              fh.write(f'valid={valid}\n')
+              fh.write(f'error_count={len(errors)}\n')
+          PY
+
+      - name: Upload validation summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-summary
+          path: |
+            validation-results.json
+            validation-summary.md
+
+      - name: Fail on malformed XML
+        if: steps.validate.outputs.valid != 'true'
+        run: |
+          echo 'Malformed XML detected in changed update set files.'
+          exit 1
+
+  review-update-sets:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: read
+    outputs:
+      review_received: ${{ steps.collect.outputs.review_received }}
+      finding_count: ${{ steps.collect.outputs.finding_count }}
+      critical_count: ${{ steps.collect.outputs.critical_count }}
+    steps:
+      - name: Request GitHub Copilot code review
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.payload.pull_request.number,
+                reviewers: ['copilot-pull-request-reviewer[bot]'],
+              });
+              core.info('Requested Copilot code review.');
+            } catch (error) {
+              if (error.status === 422) {
+                core.info(`Copilot review request was not added: ${error.message}`);
+              } else {
+                throw error;
+              }
+            }
+
+      - name: Wait for Copilot review and summarize findings
+        id: collect
+        uses: actions/github-script@v7
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          CHANGED_FILES_JSON: ${{ needs.detect-changes.outputs.files_json }}
+          COPILOT_REVIEW_POLL_ATTEMPTS: ${{ env.COPILOT_REVIEW_POLL_ATTEMPTS }}
+          COPILOT_REVIEW_POLL_INTERVAL_MS: ${{ env.COPILOT_REVIEW_POLL_INTERVAL_MS }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            const pull_number = context.payload.pull_request.number;
+            const headSha = process.env.HEAD_SHA;
+            const changedFiles = JSON.parse(process.env.CHANGED_FILES_JSON);
+            const pollAttempts = Number(process.env.COPILOT_REVIEW_POLL_ATTEMPTS);
+            const pollIntervalMs = Number(process.env.COPILOT_REVIEW_POLL_INTERVAL_MS);
+            const totalPollWindowMinutes = (pollAttempts * pollIntervalMs) / 60000;
+
+            const isCopilotReviewer = (login = '') =>
+              login === 'copilot-pull-request-reviewer[bot]';
+
+            const extractSection = (body, heading) => {
+              const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const regex = new RegExp(`(?:^|\\n)##\\s*${escaped}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|$)`, 'i');
+              const match = body.match(regex);
+              return match ? match[1].trim() : '';
+            };
+
+            const extractInlineField = (body, label) => {
+              const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+              const regex = new RegExp(`${escaped}:\\s*\\**([^\\n*]+)`, 'i');
+              const match = body.match(regex);
+              return match ? match[1].trim() : '';
+            };
+
+            const parseFinding = (comment) => {
+              const body = comment.body || '';
+              const severity = extractSection(body, 'Severity') || extractInlineField(body, 'Severity') || 'Unspecified';
+              const category = extractSection(body, 'Category') || extractInlineField(body, 'Category') || 'Unspecified';
+              const finding = extractSection(body, 'Finding') || body.trim();
+              const evidence = extractSection(body, 'Evidence');
+              const recommendation = extractSection(body, 'Recommendation');
+              return {
+                path: comment.path || '',
+                line: comment.line || comment.original_line || null,
+                url: comment.html_url || '',
+                severity,
+                category,
+                finding,
+                evidence,
+                recommendation,
+              };
+            };
+
+            let targetReview = null;
+            let findings = [];
+
+            for (let attempt = 1; attempt <= pollAttempts; attempt += 1) {
+              const reviews = await github.paginate(github.rest.pulls.listReviews, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number,
+                per_page: 100,
+              });
+
+              const reviewComments = await github.paginate(github.rest.pulls.listReviewComments, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number,
+                per_page: 100,
+              });
+
+              targetReview = reviews
+                .filter((review) => isCopilotReviewer(review.user?.login) && review.commit_id === headSha)
+                .sort((a, b) => new Date(b.submitted_at || b.created_at) - new Date(a.submitted_at || a.created_at))[0] || null;
+
+              findings = reviewComments
+                .filter((comment) => isCopilotReviewer(comment.user?.login))
+                .filter((comment) => comment.commit_id === headSha || comment.original_commit_id === headSha)
+                .filter((comment) => changedFiles.includes(comment.path))
+                .map(parseFinding);
+
+              if (targetReview || findings.length > 0) {
+                core.info(`Copilot review detected after ${attempt} polling attempt(s).`);
+                break;
+              }
+
+              if (attempt < pollAttempts) {
+                core.info(`Copilot review not available yet; waiting ${pollIntervalMs / 1000} seconds before polling again.`);
+                await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
+              }
+            }
+
+            const severityCounts = findings.reduce((acc, finding) => {
+              const key = finding.severity.toLowerCase();
+              acc[key] = (acc[key] || 0) + 1;
+              return acc;
+            }, {});
+
+            const criticalCount = severityCounts.critical || 0;
+            const reviewReceived = targetReview || findings.length > 0;
+            const reviewSummaryLines = [
+              '# Copilot review results',
+              '',
+              'GitHub Copilot code review was requested for the changed ServiceNow update set artifacts. Copilot review uses repository instructions from `.github/copilot-instructions.md` automatically when analyzing the pull request.',
+              '',
+            ];
+
+            if (!reviewReceived) {
+              reviewSummaryLines.push(`Copilot review was not detected before the ${totalPollWindowMinutes}-minute polling window expired.`);
+            } else if (findings.length === 0) {
+              reviewSummaryLines.push('Copilot completed its review and did not leave structured findings on the changed update set XML files.');
+              if (targetReview?.body) {
+                reviewSummaryLines.push('');
+                reviewSummaryLines.push(targetReview.body.trim());
+              }
+            } else {
+              reviewSummaryLines.push(`Structured findings: ${findings.length}`);
+              reviewSummaryLines.push(`Critical findings: ${criticalCount}`);
+              reviewSummaryLines.push('');
+              findings.forEach((finding, index) => {
+                reviewSummaryLines.push(`## Finding ${index + 1}`);
+                reviewSummaryLines.push(`- Severity: ${finding.severity}`);
+                reviewSummaryLines.push(`- Category: ${finding.category}`);
+                reviewSummaryLines.push(`- File: ${finding.path}${finding.line ? `:${finding.line}` : ''}`);
+                reviewSummaryLines.push(`- Finding: ${finding.finding}`);
+                if (finding.evidence) {
+                  reviewSummaryLines.push(`- Evidence: ${finding.evidence}`);
+                }
+                if (finding.recommendation) {
+                  reviewSummaryLines.push(`- Recommendation: ${finding.recommendation}`);
+                }
+                if (finding.url) {
+                  reviewSummaryLines.push(`- Comment: ${finding.url}`);
+                }
+                reviewSummaryLines.push('');
+              });
+            }
+
+            fs.writeFileSync('review-results.json', JSON.stringify({
+              review_received: Boolean(reviewReceived),
+              finding_count: findings.length,
+              critical_count: criticalCount,
+              findings,
+              review_body: targetReview?.body || '',
+            }, null, 2));
+            fs.writeFileSync('review-summary.md', `${reviewSummaryLines.join('\n')}\n`);
+
+            core.setOutput('review_received', reviewReceived ? 'true' : 'false');
+            core.setOutput('finding_count', String(findings.length));
+            core.setOutput('critical_count', String(criticalCount));
+
+      - name: Upload review summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-summary
+          path: |
+            review-results.json
+            review-summary.md
+
+  status-check:
+    needs:
+      - detect-changes
+      - validate-xml
+      - review-update-sets
+    if: always() && needs.detect-changes.outputs.has_changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+      contents: read
+    steps:
+      - name: Download validation summary
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: validation-summary
+          path: artifacts/validation
+
+      - name: Download review summary
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: review-summary
+          path: artifacts/review
+
+      - name: Publish aggregate status comment
+        id: publish
+        uses: actions/github-script@v7
+        env:
+          CHANGED_FILES_JSON: ${{ needs.detect-changes.outputs.files_json }}
+          VALIDATE_RESULT: ${{ needs.validate-xml.result }}
+          VALIDATE_VALID: ${{ needs.validate-xml.outputs.valid }}
+          REVIEW_RESULT: ${{ needs.review-update-sets.result }}
+          REVIEW_RECEIVED: ${{ needs.review-update-sets.outputs.review_received }}
+          CRITICAL_COUNT: ${{ needs.review-update-sets.outputs.critical_count }}
+        with:
+          script: |
+            const fs = require('fs');
+            const marker = '<!-- update-set-review-summary -->';
+            const changedFiles = JSON.parse(process.env.CHANGED_FILES_JSON);
+            const readJson = (path, fallback) =>
+              fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : fallback;
+
+            const validation = readJson('artifacts/validation/validation-results.json', {
+              valid: process.env.VALIDATE_VALID === 'true',
+              error_count: 0,
+              errors: [],
+              workflow_error: process.env.VALIDATE_RESULT !== 'success',
+            });
+            const review = readJson('artifacts/review/review-results.json', {
+              review_received: process.env.REVIEW_RECEIVED === 'true',
+              finding_count: 0,
+              critical_count: Number(process.env.CRITICAL_COUNT || '0'),
+              findings: [],
+              review_body: '',
+              workflow_error: process.env.REVIEW_RESULT !== 'success',
+            });
+
+            const shouldBlock =
+              !validation.valid ||
+              Number(review.critical_count || 0) > 0;
+
+            const lines = [
+              marker,
+              '## ServiceNow Update Set Review',
+              '',
+              `Changed update set XML files (${changedFiles.length}):`,
+              ...changedFiles.map((file) => `- \`${file}\``),
+              '',
+              '### XML validation',
+              validation.valid
+                ? '✅ All changed update set XML files are well-formed.'
+                : `❌ XML validation failed for ${validation.error_count} file(s).`,
+              '',
+            ];
+
+            if (!validation.valid) {
+              validation.errors.forEach((error) => {
+                lines.push(`- \`${error.file}\`: ${error.message}`);
+              });
+              if (validation.workflow_error) {
+                lines.push('- Validation workflow did not complete successfully; check the job logs for details.');
+              }
+              lines.push('');
+            } else if (validation.workflow_error) {
+              lines.push('- ⚠️ Validation workflow reported success data was incomplete; check the job logs if this persists.');
+              lines.push('');
+            }
+
+            lines.push('### Copilot artifact review');
+            lines.push('GitHub Copilot code review was requested for this pull request and uses `.github/copilot-instructions.md` as repository review guidance.');
+
+            if (review.review_received) {
+              lines.push(`- Structured findings: ${review.finding_count}`);
+              lines.push(`- Critical findings: ${review.critical_count}`);
+            } else {
+              lines.push('- ⚠️ Copilot review was not detected before the workflow timeout.');
+              if (review.workflow_error) {
+                lines.push('- The review workflow did not complete successfully; check the job logs for the failing step.');
+              }
+            }
+            lines.push('');
+
+            if (review.findings.length > 0) {
+              review.findings.forEach((finding, index) => {
+                lines.push(`#### Finding ${index + 1}`);
+                lines.push(`- Severity: ${finding.severity}`);
+                lines.push(`- Category: ${finding.category}`);
+                lines.push(`- Finding: ${finding.finding}`);
+                if (finding.evidence) {
+                  lines.push(`- Evidence: ${finding.evidence}`);
+                }
+                if (finding.path) {
+                  lines.push(`- Evidence location: \`${finding.path}\`${finding.line ? `:${finding.line}` : ''}`);
+                }
+                if (finding.recommendation) {
+                  lines.push(`- Recommendation: ${finding.recommendation}`);
+                }
+                if (finding.url) {
+                  lines.push(`- Copilot comment: ${finding.url}`);
+                }
+                lines.push('');
+              });
+            } else if (review.review_body) {
+              lines.push(review.review_body.trim());
+              lines.push('');
+            } else {
+              lines.push('No structured Copilot findings were reported on the changed update set XML files.');
+              lines.push('');
+            }
+
+            lines.push('### Status check result');
+            if (shouldBlock) {
+              lines.push('❌ Merge blocked until malformed XML is fixed and all Critical Copilot findings are resolved.');
+            } else if (!review.review_received) {
+              lines.push('⚠️ XML validation passed and no Critical Copilot findings were detected, but Copilot review was not confirmed before the workflow timeout.');
+            } else {
+              lines.push('✅ XML validation passed and no Critical Copilot findings were detected.');
+            }
+
+            const body = `${lines.join('\n')}\n`;
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              per_page: 100,
+            });
+
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body,
+              });
+            }
+
+            core.setOutput('should_block', shouldBlock ? 'true' : 'false');
+
+      - name: Enforce review gate
+        if: steps.publish.outputs.should_block == 'true'
+        run: |
+          echo 'Blocking merge due to malformed XML or Critical Copilot review findings.'
+          exit 1
