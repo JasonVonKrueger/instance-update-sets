@@ -422,6 +422,50 @@ Prefer Flow Designer capabilities over custom scripting when practical.
 
 ---
 
+# Scripted REST API Review
+
+When reviewing `sys_ws_operation` records (Scripted REST Resources) or any new Scripted REST API (`sys_ws_provider`) added in an update set:
+
+## Authentication
+
+- **Flag any API configured to allow Basic Authentication.**
+- Basic Authentication transmits credentials with every request and is difficult to revoke. It is not acceptable for new API surfaces in an enterprise environment.
+- **Recommend OAuth 2.0** (Authorization Code or Client Credentials grant) using ServiceNow's built-in OAuth provider.
+- Check the `requires_auth` and `supported_auth` fields on the REST API definition. If `basic` is listed or if no authentication is enforced, raise a Critical/Security finding.
+
+Flag:
+
+- Basic Authentication enabled or not explicitly disabled on a new Scripted REST API
+- Missing authentication enforcement (unauthenticated access)
+- API keys or credentials hardcoded in resource scripts
+
+Recommendation:
+
+> Configure the Scripted REST API to use OAuth 2.0. Navigate to the API record, set Supported authentication policies to "OAuth", and remove Basic. Create or reference an existing OAuth application registry for token issuance.
+
+---
+
+## Admin Role Assignment Review
+
+When reviewing any record that grants roles — including `sys_user_role`, `sys_user_has_role`, `sys_group_has_role`, or role assignments inside scripts — check whether the **`admin`** role is being granted.
+
+Flag:
+
+- Direct assignment of the `admin` role to a user (`sys_user_has_role` where `role = admin`)
+- Direct assignment of the `admin` role to a group (`sys_group_has_role` where `role = admin`)
+- Script logic that calls `addRole('admin')` or equivalent
+- Any mechanism that elevates a user or service account to `admin`
+
+Severity: **Critical** | Category: **Security**
+
+Finding: Granting the `admin` role provides unrestricted access to all tables, data, scripts, and configurations on the instance. This bypasses all ACLs and is a significant privilege escalation risk.
+
+Recommendation:
+
+> Follow the principle of least privilege. Create a custom role with only the permissions required for the use case. Never grant `admin` to service accounts, integration users, or end users. If elevated access is temporarily required, use Elevated Privileges (HI or PAM workflow) rather than permanent role assignment.
+
+---
+
 # Upgrade Safety Review
 
 Identify customizations that may create upgrade conflicts.
