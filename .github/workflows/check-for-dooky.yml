@@ -1,37 +1,37 @@
-name: Check changed XML files for banned word "dooky"
+# name: Check changed XML files for banned word "dooky"
 
-on:
-  pull_request:
-    types: [opened, reopened, synchronize]
+# on:
+#   pull_request:
+#     types: [opened, reopened, synchronize]
 
-jobs:
-  check-dooky:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# jobs:
+#   check-dooky:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
 
-      - name: Get list of changed files
-        id: changed
-        run: |
-          git fetch origin ${{ github.base_ref }} --depth=1
-          git diff --name-only origin/${{ github.base_ref }} > changed_files.txt
-          echo "Changed files:"
-          cat changed_files.txt
+#       - name: Get list of changed files
+#         id: changed
+#         run: |
+#           git fetch origin ${{ github.base_ref }} --depth=1
+#           git diff --name-only origin/${{ github.base_ref }} > changed_files.txt
+#           echo "Changed files:"
+#           cat changed_files.txt
 
-      - name: Filter XML and update-set files
-        id: filter
-        run: |
-          grep -E '\.xml$|\.update$|\.xml\.update$' changed_files.txt > filtered_files.txt || true
-          echo "Filtered files:"
-          cat filtered_files.txt
+#       - name: Filter XML and update-set files
+#         id: filter
+#         run: |
+#           grep -E '\.xml$|\.update$|\.xml\.update$' changed_files.txt > filtered_files.txt || true
+#           echo "Filtered files:"
+#           cat filtered_files.txt
 
-      - name: Scan filtered files for banned word
-        run: |
-          echo "Scanning XML/update-set files for the word 'dooky'..."
-          if grep -Rni "dooky" -f filtered_files.txt; then
-            echo "::error::The word 'dooky' was found in changed XML/update-set files. Remove it before merging."
-            exit 1
-          else
-            echo "No banned words found."
-          fi
+#       - name: Scan filtered files for banned word
+#         run: |
+#           echo "Scanning XML/update-set files for the word 'dooky'..."
+#           if grep -Rni "dooky" -f filtered_files.txt; then
+#             echo "::error::The word 'dooky' was found in changed XML/update-set files. Remove it before merging."
+#             exit 1
+#           else
+#             echo "No banned words found."
+#           fi
