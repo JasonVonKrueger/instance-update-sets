@@ -1,7 +1,7 @@
 name: Review Update Sets
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
     paths:
       - 'update-sets/**/*.xml'
@@ -9,6 +9,11 @@ on:
 concurrency:
   group: review-update-sets-${{ github.event.pull_request.number }}
   cancel-in-progress: true
+
+env:
+  # Poll Copilot review for up to 3 minutes to allow review comments to appear on the PR.
+  COPILOT_REVIEW_POLL_ATTEMPTS: 18
+  COPILOT_REVIEW_POLL_INTERVAL_MS: 10000
 
 jobs:
   detect-changes:
@@ -51,12 +56,8 @@ jobs:
       valid: ${{ steps.validate.outputs.valid }}
       error_count: ${{ steps.validate.outputs.error_count }}
     steps:
-      - name: Checkout pull request HEAD
+      - name: Checkout pull request changes
         uses: actions/checkout@v4
-        with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.sha }}
-          persist-credentials: false
 
       - name: Validate changed XML files
         id: validate
@@ -84,11 +85,6 @@ jobs:
                   errors.append({
                       'file': rel_path,
                       'message': str(exc),
-                  })
-              except FileNotFoundError:
-                  errors.append({
-                      'file': rel_path,
-                      'message': 'File not found in pull request head checkout.',
                   })
 
           summary_lines = ['# XML validation results', '']
@@ -168,6 +164,8 @@ jobs:
         env:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           CHANGED_FILES_JSON: ${{ needs.detect-changes.outputs.files_json }}
+          COPILOT_REVIEW_POLL_ATTEMPTS: ${{ env.COPILOT_REVIEW_POLL_ATTEMPTS }}
+          COPILOT_REVIEW_POLL_INTERVAL_MS: ${{ env.COPILOT_REVIEW_POLL_INTERVAL_MS }}
         with:
           script: |
             const fs = require('fs');
@@ -175,12 +173,12 @@ jobs:
             const pull_number = context.payload.pull_request.number;
             const headSha = process.env.HEAD_SHA;
             const changedFiles = JSON.parse(process.env.CHANGED_FILES_JSON);
-            const maxAttempts = 18;
-            const sleepMs = 10000;
+            const pollAttempts = Number(process.env.COPILOT_REVIEW_POLL_ATTEMPTS);
+            const pollIntervalMs = Number(process.env.COPILOT_REVIEW_POLL_INTERVAL_MS);
+            const totalPollWindowMinutes = (pollAttempts * pollIntervalMs) / 60000;
 
             const isCopilotReviewer = (login = '') =>
-              login === 'copilot-pull-request-reviewer[bot]' ||
-              login.toLowerCase().includes('copilot');
+              login === 'copilot-pull-request-reviewer[bot]';
 
             const extractSection = (body, heading) => {
               const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -218,7 +216,7 @@ jobs:
             let targetReview = null;
             let findings = [];
 
-            for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+            for (let attempt = 1; attempt <= pollAttempts; attempt += 1) {
               const reviews = await github.paginate(github.rest.pulls.listReviews, {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -248,9 +246,9 @@ jobs:
                 break;
               }
 
-              if (attempt < maxAttempts) {
-                core.info('Copilot review not available yet; waiting 10 seconds before polling again.');
-                await new Promise((resolve) => setTimeout(resolve, sleepMs));
+              if (attempt < pollAttempts) {
+                core.info(`Copilot review not available yet; waiting ${pollIntervalMs / 1000} seconds before polling again.`);
+                await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
               }
             }
 
@@ -270,7 +268,7 @@ jobs:
             ];
 
             if (!reviewReceived) {
-              reviewSummaryLines.push('Copilot review was not detected before the polling window expired.');
+              reviewSummaryLines.push(`Copilot review was not detected before the ${totalPollWindowMinutes}-minute polling window expired.`);
             } else if (findings.length === 0) {
               reviewSummaryLines.push('Copilot completed its review and did not leave structured findings on the changed update set XML files.');
               if (targetReview?.body) {
@@ -335,12 +333,14 @@ jobs:
       contents: read
     steps:
       - name: Download validation summary
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: validation-summary
           path: artifacts/validation
 
       - name: Download review summary
+        continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: review-summary
@@ -361,13 +361,27 @@ jobs:
             const fs = require('fs');
             const marker = '<!-- update-set-review-summary -->';
             const changedFiles = JSON.parse(process.env.CHANGED_FILES_JSON);
-            const validation = JSON.parse(fs.readFileSync('artifacts/validation/validation-results.json', 'utf8'));
-            const review = JSON.parse(fs.readFileSync('artifacts/review/review-results.json', 'utf8'));
+            const readJson = (path, fallback) =>
+              fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : fallback;
+
+            const validation = readJson('artifacts/validation/validation-results.json', {
+              valid: process.env.VALIDATE_VALID === 'true',
+              error_count: 0,
+              errors: [],
+              workflow_error: process.env.VALIDATE_RESULT !== 'success',
+            });
+            const review = readJson('artifacts/review/review-results.json', {
+              review_received: process.env.REVIEW_RECEIVED === 'true',
+              finding_count: 0,
+              critical_count: Number(process.env.CRITICAL_COUNT || '0'),
+              findings: [],
+              review_body: '',
+              workflow_error: process.env.REVIEW_RESULT !== 'success',
+            });
 
             const shouldBlock =
-              process.env.VALIDATE_VALID !== 'true' ||
-              process.env.REVIEW_RECEIVED !== 'true' ||
-              Number(process.env.CRITICAL_COUNT || '0') > 0;
+              !validation.valid ||
+              Number(review.critical_count || 0) > 0;
 
             const lines = [
               marker,
@@ -387,6 +401,12 @@ jobs:
               validation.errors.forEach((error) => {
                 lines.push(`- \`${error.file}\`: ${error.message}`);
               });
+              if (validation.workflow_error) {
+                lines.push('- Validation workflow did not complete successfully; check the job logs for details.');
+              }
+              lines.push('');
+            } else if (validation.workflow_error) {
+              lines.push('- ⚠️ Validation workflow reported success data was incomplete; check the job logs if this persists.');
               lines.push('');
             }
 
@@ -398,6 +418,9 @@ jobs:
               lines.push(`- Critical findings: ${review.critical_count}`);
             } else {
               lines.push('- ⚠️ Copilot review was not detected before the workflow timeout.');
+              if (review.workflow_error) {
+                lines.push('- The review workflow did not complete successfully; check the job logs for the failing step.');
+              }
             }
             lines.push('');
 
@@ -432,6 +455,8 @@ jobs:
             lines.push('### Status check result');
             if (shouldBlock) {
               lines.push('❌ Merge blocked until malformed XML is fixed and all Critical Copilot findings are resolved.');
+            } else if (!review.review_received) {
+              lines.push('⚠️ XML validation passed and no Critical Copilot findings were detected, but Copilot review was not confirmed before the workflow timeout.');
             } else {
               lines.push('✅ XML validation passed and no Critical Copilot findings were detected.');
             }
@@ -466,5 +491,5 @@ jobs:
       - name: Enforce review gate
         if: steps.publish.outputs.should_block == 'true'
         run: |
-          echo 'Blocking merge due to XML validation failure, missing Copilot review, or Critical review findings.'
+          echo 'Blocking merge due to malformed XML or Critical Copilot review findings.'
           exit 1
