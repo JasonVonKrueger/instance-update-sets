@@ -180,7 +180,7 @@ jobs:
 
             const isCopilotReviewer = (login = '') =>
               login === 'copilot-pull-request-reviewer[bot]' ||
-              (login.includes('copilot') && login.includes('review'));
+              login.toLowerCase().includes('copilot');
 
             const extractSection = (body, heading) => {
               const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
