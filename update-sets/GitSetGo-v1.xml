@@ -1,0 +1,1264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2026-09-15 14:13:23">
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_application"><sys_app_application action="INSERT_OR_UPDATE"><active>true</active><category display_value="Custom Applications">e0355b31ef303000a61d5a3615c0fb78</category><description/><device_type>browser</device_type><hint/><name/><order>100</order><roles>admin</roles><sys_class_name>sys_app_application</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 15:47:06</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>c3ee088a839a831066b576d6feaad32c</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Git Set Go</sys_name><sys_overrides/><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_app_application_c3ee088a839a831066b576d6feaad32c</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 15:47:06</sys_updated_on><title>Git Set Go</title><view_name/></sys_app_application></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_app_module"><sys_app_module action="INSERT_OR_UPDATE"><active>true</active><application display_value="Git Set Go">c3ee088a839a831066b576d6feaad32c</application><assessment/><device_type/><filter/><hint/><homepage/><image/><link_type>DIRECT</link_type><map_page/><mobile_title>Properties</mobile_title><mobile_view_name>Mobile</mobile_view_name><name/><order/><override_menu_roles>false</override_menu_roles><query>/system_properties_ui.do?sysparm_title=Git%20Set%20Go&amp;sysparm_category=Git%20Set%20Go&#13;
+</query><report/><require_confirmation>true</require_confirmation><roles/><sys_class_name>sys_app_module</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 15:51:52</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>2f0f4c8a839a831066b576d6feaad35a</sys_id><sys_mod_count>6</sys_mod_count><sys_name>Properties</sys_name><sys_overrides/><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_app_module_2f0f4c8a839a831066b576d6feaad35a</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 16:05:46</sys_updated_on><timeline_page/><title>Properties</title><uncancelable>false</uncancelable><view_name/><window_name/></sys_app_module></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_kmf_module_key_policy"><sys_kmf_module_key_policy action="INSERT_OR_UPDATE"><crypto_module display_value="com_glide_security_oauth_jwt_signing">5520d875ff32221099cfffffffffff8e</crypto_module><key_type display_value="Private Signature Generation Key">eacabf24c7003300af4d43c6f0976341</key_type><last_enforced>2026-07-26 16:24:57</last_enforced><result>reject</result><sys_class_name>sys_kmf_module_key_policy</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 16:24:57</sys_created_on><sys_id>78b7d40e83da831066b576d6feaad3db</sys_id><sys_mod_count>0</sys_mod_count><sys_name/><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_kmf_module_key_policy_78b7d40e83da831066b576d6feaad3db</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 16:24:57</sys_updated_on></sys_kmf_module_key_policy></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>The repository owner.</description><ignore_cache>true</ignore_cache><is_private>false</is_private><name>x_gitsetgo.owner</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-21 20:09:48</sys_created_on><sys_id>1e2bd3548352cf1066b576d6feaad3dc</sys_id><sys_mod_count>2</sys_mod_count><sys_name>x_gitsetgo.owner</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_1e2bd3548352cf1066b576d6feaad3dc</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 02:04:20</sys_updated_on><type>string</type><value>JasonVonKrueger</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=1e2bd3548352cf1066b576d6feaad3dc"/></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>Git branch used for deployment.</description><ignore_cache>true</ignore_cache><is_private>false</is_private><name>x_gitsetgo.branch</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-21 20:10:42</sys_created_on><sys_id>266b5b548352cf1066b576d6feaad33b</sys_id><sys_mod_count>2</sys_mod_count><sys_name>x_gitsetgo.branch</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_266b5b548352cf1066b576d6feaad33b</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 02:03:13</sys_updated_on><type>string</type><value>main</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=266b5b548352cf1066b576d6feaad33b"/></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>Repository for the update sets.</description><ignore_cache>true</ignore_cache><is_private>false</is_private><name>x_gitsetgo.repo</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-21 20:10:18</sys_created_on><sys_id>385b5f54831a8f1066b576d6feaad33e</sys_id><sys_mod_count>2</sys_mod_count><sys_name>x_gitsetgo.repo</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_385b5f54831a8f1066b576d6feaad33e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 02:03:48</sys_updated_on><type>string</type><value>instance-update-sets</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=385b5f54831a8f1066b576d6feaad33e"/></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>Captures the last execution timestamp of the scheduled job 'Surface New Unconnected Content of Categories'</description><ignore_cache>true</ignore_cache><is_private>false</is_private><name>taxonomy.category.new_content_job_last_run</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2022-08-08 07:43:25</sys_created_on><sys_id>63f1a53377451110cd1b756f1b5a9991</sys_id><sys_mod_count>12</sys_mod_count><sys_name>taxonomy.category.new_content_job_last_run</sys_name><sys_package display_value="Content Taxonomy" source="com.snc.taxonomy">8153be0218ba32108bb255f46a373ad1</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_63f1a53377451110cd1b756f1b5a9991</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 07:00:03</sys_updated_on><type>date_format</type><value>2026-07-26</value><write_roles>maint</write_roles></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=63f1a53377451110cd1b756f1b5a9991"/></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties"><sys_properties action="INSERT_OR_UPDATE"><choices/><description>Credential alias for Git Set Go application.</description><ignore_cache>true</ignore_cache><is_private>false</is_private><name>x_gitsetgo.credential_alias</name><read_roles/><suffix/><sys_class_name>sys_properties</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-21 20:11:08</sys_created_on><sys_id>c98b931c839e8f1066b576d6feaad3b2</sys_id><sys_mod_count>12</sys_mod_count><sys_name>x_gitsetgo.credential_alias</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_c98b931c839e8f1066b576d6feaad3b2</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 02:02:34</sys_updated_on><type>string</type><value>6c032fe48316031066b576d6feaad3cf</value><write_roles/></sys_properties><sys_translated_text action="delete_multiple" query="documentkey=c98b931c839e8f1066b576d6feaad3b2"/></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category"><sys_properties_category action="INSERT_OR_UPDATE"><name>Git Set Go</name><sys_class_name>sys_properties_category</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 01:59:36</sys_created_on><sys_id>4571193d8392431066b576d6feaad3e7</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Git Set Go</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_category_4571193d8392431066b576d6feaad3e7</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 01:59:36</sys_updated_on><title><![CDATA[<p>Properties for the Git Set Go application.</p>]]></title></sys_properties_category><sys_translated_text action="delete_multiple" query="documentkey=4571193d8392431066b576d6feaad3e7"/></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category_m2m"><sys_properties_category_m2m action="INSERT_OR_UPDATE"><category display_value="Git Set Go">4571193d8392431066b576d6feaad3e7</category><order>300</order><property display_value="x_github.owner" name="x_github.owner">1e2bd3548352cf1066b576d6feaad3dc</property><sys_class_name>sys_properties_category_m2m</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 01:59:54</sys_created_on><sys_id>81b1517d8392431066b576d6feaad326</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_github.owner.Git Set Go</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_category_m2m_81b1517d8392431066b576d6feaad326</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 01:59:54</sys_updated_on></sys_properties_category_m2m></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category_m2m"><sys_properties_category_m2m action="INSERT_OR_UPDATE"><category display_value="Git Set Go">4571193d8392431066b576d6feaad3e7</category><order>400</order><property display_value="x_github.repo" name="x_github.repo">385b5f54831a8f1066b576d6feaad33e</property><sys_class_name>sys_properties_category_m2m</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 01:59:54</sys_created_on><sys_id>c1b1517d8392431066b576d6feaad343</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_github.repo.Git Set Go</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_category_m2m_c1b1517d8392431066b576d6feaad343</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 01:59:54</sys_updated_on></sys_properties_category_m2m></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category_m2m"><sys_properties_category_m2m action="INSERT_OR_UPDATE"><category display_value="Git Set Go">4571193d8392431066b576d6feaad3e7</category><order>100</order><property display_value="x_github.branch" name="x_github.branch">266b5b548352cf1066b576d6feaad33b</property><sys_class_name>sys_properties_category_m2m</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 01:59:54</sys_created_on><sys_id>c9b1517d8392431066b576d6feaad31b</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_github.branch.Git Set Go</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_category_m2m_c9b1517d8392431066b576d6feaad31b</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 01:59:54</sys_updated_on></sys_properties_category_m2m></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_properties_category_m2m"><sys_properties_category_m2m action="INSERT_OR_UPDATE"><category display_value="Git Set Go">4571193d8392431066b576d6feaad3e7</category><order>200</order><property display_value="x_github.credential_alias" name="x_github.credential_alias">c98b931c839e8f1066b576d6feaad3b2</property><sys_class_name>sys_properties_category_m2m</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-26 01:59:54</sys_created_on><sys_id>cdb1517d8392431066b576d6feaad321</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_github.credential_alias.Git Set Go</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_properties_category_m2m_cdb1517d8392431066b576d6feaad321</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 01:59:54</sys_updated_on></sys_properties_category_m2m></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include"><sys_script_include action="INSERT_OR_UPDATE"><access>public</access><active>true</active><api_name>global.UpdateSetGitHubExporter</api_name><caller_access/><client_callable>false</client_callable><description>Emulates the OOB "Export to XML" UI action (found on Update Sets / Retrieved Update Sets) and commits the resulting XML file to a GitHub repository.</description><mobile_callable>false</mobile_callable><name>UpdateSetGitHubExporter</name><sandbox_callable>false</sandbox_callable><script><![CDATA[/**
+ * UpdateSetGitHubExporter
+ * ------------------------------------------------------------------
+ * Emulates the OOB "Export to XML" UI action (found on Update Sets /
+ * Retrieved Update Sets) and commits the resulting XML file to a
+ * GitHub repository.
+ *
+ * Target repo: https://github.com/JasonVonKrueger/instance-update-sets.git
+ *
+ * SETUP REQUIRED BEFORE USE
+ * ------------------------------------------------------------------
+ * 1. Create a GitHub Personal Access Token (classic or fine-grained)
+ *    with "contents: read/write" permission on the target repo.
+ *
+ * 2. Create a Connection & Credential alias (System OAuth > Application
+ *    Registry, or Connections & Credentials module) using Basic Auth:
+ *       - Username: any non-empty string (e.g. "x-access-token")
+ *       - Password: the GitHub PAT
+ *    Note the alias name and set it below / via system property.
+ *    NEVER hardcode the token directly in this script.
+ *
+ * 3. (Optional) Set system properties to avoid editing this file:
+ *       x_gitsetgo.owner  = <github username>
+ *       x_gitsetgo.repo   = instance-update-sets
+ *       x_gitsetgo.branch = main
+ *       x_gitsetgo.credential_alias = <your alias name>
+ *
+ * USAGE
+ * ------------------------------------------------------------------
+ *   var exporter = new UpdateSetGitHubExporter();
+ *   var result = exporter.commitUpdateSetToGitHub(currentUpdateSetSysId, {
+ *       path: 'update-sets',              // optional subfolder in repo
+ *       commitMessage: 'Custom message',  // optional
+ *       branch: 'main'                    // optional override
+ *   });
+ *   // result = { success, path, branch, commitSha, fileUrl, recordCount, error }
+ *
+ * Typically wired up via:
+ *   - A UI Action button on sys_update_set / sys_remote_update_set, or
+ *   - A Business Rule (after update, when state changes to "complete")
+ * ------------------------------------------------------------------
+ */
+var UpdateSetGitHubExporter = Class.create();
+UpdateSetGitHubExporter.prototype = {
+    initialize: function() {
+        this.githubOwner = gs.getProperty('x_gitsetgo.owner');
+        this.githubRepo = gs.getProperty('x_gitsetgo.repo');
+        this.githubBranch = gs.getProperty('x_gitsetgo.branch');
+        this.githubApiBase = 'https://api.github.com';
+
+        // Name of the Connection & Credential (Basic Auth) alias holding the GitHub PAT
+        this.credentialAlias = gs.getProperty('x_gitsetgo.credential_alias');
+    },
+
+    /**
+     * Builds the same XML payload the "Export to XML" UI action produces.
+     * @param {string} updateSetSysId - sys_id of sys_update_set (or sys_remote_update_set)
+     * @returns {Object} { xml, name, sysId, recordCount }
+     */
+    exportUpdateSetToXML: function(updateSetSysId) {
+        if (!updateSetSysId) {
+            throw new Error('updateSetSysId is required');
+        }
+
+        var usGr = new GlideRecord('sys_update_set');
+        var found = usGr.get(updateSetSysId);
+
+        if (!found) {
+            // Fall back to the retrieved/remote update set table
+            usGr = new GlideRecord('sys_remote_update_set');
+            found = usGr.get(updateSetSysId);
+        }
+
+        if (!found) {
+            throw new Error('Update Set not found: ' + updateSetSysId);
+        }
+
+        var setName = usGr.getValue('name') || 'update_set';
+        var sysId = usGr.getValue('sys_id');
+
+        var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+        xml += '<unload unload_date="' + new GlideDateTime().getDisplayValue() + '">\n';
+
+        var xmlGr = new GlideRecord('sys_update_xml');
+        xmlGr.addQuery('update_set', sysId);
+        xmlGr.orderBy('order');
+        xmlGr.query();
+
+        var count = 0;
+        while (xmlGr.next()) {
+            var payload = xmlGr.getValue('payload');
+            if (payload) {
+                xml += payload + '\n';
+                count++;
+            }
+        }
+        xml += '</unload>';
+
+        gs.info('UpdateSetGitHubExporter: exported ' + count + ' customization record(s) for update set "' + setName + '" (' + sysId + ')');
+
+        return {
+            xml: xml,
+            name: setName,
+            sysId: sysId,
+            recordCount: count
+        };
+    },
+
+    /**
+     * Exports the update set to XML and commits it to the configured GitHub repo.
+     * @param {string} updateSetSysId
+     * @param {Object} [options]
+     * @param {string} [options.path] - subfolder within the repo, no leading/trailing slash
+     * @param {string} [options.commitMessage] - custom commit message
+     * @param {string} [options.branch] - override the default branch
+     * @returns {Object} { success, path, branch, commitSha, fileUrl, recordCount, error }
+     */
+    commitUpdateSetToGitHub: function(updateSetSysId, options) {
+        options = options || {};
+
+        var exportResult;
+        try {
+            exportResult = this.exportUpdateSetToXML(updateSetSysId);
+        } 
+		catch (e) {
+            gs.error('UpdateSetGitHubExporter: export failed - ' + e.message);
+            return { success: false, error: e.message };
+        }
+
+        if (exportResult.recordCount === 0) {
+            gs.warn('UpdateSetGitHubExporter: update set ' + exportResult.name + ' has no sys_update_xml records - committing an empty unload.');
+        }
+
+        var fileName = this._sanitizeFileName(exportResult.name) + '_' + exportResult.sysId.substring(0, 8) + '.xml';
+        var repoPath = (options.path ? options.path.replace(/^\/|\/$/g, '') + '/' : '') + fileName;
+        var branch = options.branch || this.githubBranch;
+        var commitMessage = options.commitMessage ||
+            ('Update Set export: ' + exportResult.name + ' (' + exportResult.sysId + ')');
+
+        var existingSha = this._getExistingFileSha(repoPath, branch);
+        var putResult = this._putFile(repoPath, exportResult.xml, commitMessage, branch, existingSha);
+
+        return {
+            success: putResult.success,
+            path: repoPath,
+            branch: branch,
+            commitSha: putResult.commitSha,
+            fileUrl: putResult.fileUrl,
+            recordCount: exportResult.recordCount,
+            error: putResult.error
+        };
+    },
+
+    _sanitizeFileName: function(name) {
+        return ('' + name).replace(/[^a-zA-Z0-9_\-]/g, '_');
+    },
+
+    /**
+     * Checks whether the file already exists on the target branch and,
+     * if so, returns its blob sha (required by GitHub to update a file).
+     */
+    _getExistingFileSha: function(repoPath, branch) {
+        try {
+            var r = new sn_ws.RESTMessageV2();
+            r.setEndpoint(this.githubApiBase + '/repos/' + this.githubOwner + '/' + this.githubRepo +
+                '/contents/' + repoPath + '?ref=' + encodeURIComponent(branch));
+            r.setHttpMethod('GET');
+            r.setAuthenticationProfile('basic', this.credentialAlias);
+            r.setRequestHeader('Accept', 'application/vnd.github+json');
+            r.setRequestHeader('X-GitHub-Api-Version', '2022-11-28');
+
+            var response = r.execute();
+            if (response.getStatusCode() == 200) {
+                var body = JSON.parse(response.getBody());
+                return body.sha;
+            }
+        } catch (e) {
+            gs.warn('UpdateSetGitHubExporter: sha lookup failed (treating as new file) - ' + e.message);
+        }
+        return null;
+    },
+
+    /**
+     * Creates or updates the file via GitHub's Contents API.
+     * Note: the Contents API supports files up to ~1MB. For larger
+     * update set exports, switch to the Git Data API (blob/tree/commit).
+     */
+    _putFile: function(repoPath, content, message, branch, sha) {
+        try {
+            var r = new sn_ws.RESTMessageV2();
+            r.setEndpoint(this.githubApiBase + '/repos/' + this.githubOwner + '/' + this.githubRepo + '/contents/' + repoPath);
+            r.setHttpMethod('PUT');
+            r.setAuthenticationProfile('basic', this.credentialAlias);
+            r.setRequestHeader('Accept', 'application/vnd.github+json');
+            r.setRequestHeader('X-GitHub-Api-Version', '2022-11-28');
+            r.setRequestHeader('Content-Type', 'application/json');
+
+            var payload = {
+                message: message,
+                content: GlideStringUtil.base64Encode(content),
+                branch: branch
+            };
+            if (sha) {
+                payload.sha = sha;
+            }
+            r.setRequestBody(JSON.stringify(payload));
+
+            var response = r.execute();
+            var status = response.getStatusCode();
+            var responseBody = response.getBody();
+
+            if (status == 200 || status == 201) {
+                var parsed = JSON.parse(responseBody);
+                return {
+                    success: true,
+                    commitSha: parsed.commit ? parsed.commit.sha : null,
+                    fileUrl: parsed.content ? parsed.content.html_url : null
+                };
+            }
+
+            gs.error('UpdateSetGitHubExporter: GitHub commit failed [' + status + ']: ' + responseBody);
+            return {
+                success: false,
+                error: 'HTTP ' + status + ': ' + responseBody
+            };
+        } 
+		catch (e) {
+            // Most commonly hit when this.credentialAlias doesn't match the
+            // "ID" field of an existing Connection & Credential Alias record,
+            // or the alias record isn't active / isn't type "Credential".
+            var errMsg = 'REST call failed - check that credential alias "' + this.credentialAlias +
+                '" exactly matches the ID field of an active Connection & Credential Alias (Basic Auth). ' +
+                'Underlying error: ' + e.message;
+            gs.error('UpdateSetGitHubExporter: ' + errMsg);
+            return {
+                success: false,
+                error: errMsg
+            };
+        }
+    },
+
+    type: 'UpdateSetGitHubExporter'
+};]]></script><sys_class_name>sys_script_include</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-21 20:07:51</sys_created_on><sys_id>408a9fd08352cf1066b576d6feaad336</sys_id><sys_mod_count>9</sys_mod_count><sys_name>UpdateSetGitHubExporter</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_script_include_408a9fd08352cf1066b576d6feaad336</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-26 16:07:12</sys_updated_on></sys_script_include><sys_es_latest_script action="INSERT_OR_UPDATE"><id>408a9fd08352cf1066b576d6feaad336</id><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-21 20:07:50</sys_created_on><sys_id>30ca9fd08352cf1066b576d6feaad3db</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-21 20:07:50</sys_updated_on><table>sys_script_include</table><use_es_latest>true</use_es_latest></sys_es_latest_script></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include"><sys_script_include action="INSERT_OR_UPDATE"><access>public</access><active>true</active><api_name>global.UpdateSetGitHubExporterAjax</api_name><caller_access/><client_callable>true</client_callable><description>Client-callable Ajax wrapper for UI actions to invoke UpdateSetGitHubExporter.</description><mobile_callable>false</mobile_callable><name>UpdateSetGitHubExporterAjax</name><sandbox_callable>false</sandbox_callable><script><![CDATA[var UpdateSetGitHubExporterAjax = Class.create();
+UpdateSetGitHubExporterAjax.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+    exportUpdateSet: function() {
+        var updateSetSysId = this.getParameter('sysparm_update_set_sys_id') || this.getParameter('sysparm_sys_id') || '';
+        if (!updateSetSysId) {
+            return this._jsonError('Missing required parameter: sysparm_update_set_sys_id');
+        }
+
+        try {
+            var ExporterCtor = global.UpdateSetGitHubExporter || UpdateSetGitHubExporter;
+            if (!ExporterCtor) {
+                return this._jsonError('UpdateSetGitHubExporter is not available.');
+            }
+
+            var exporter = new ExporterCtor();
+            var result = this._invokeExporter(exporter, updateSetSysId);
+            return this._jsonOk(result);
+        } 
+		catch (ex) {
+            return this._jsonError(ex && ex.message ? ex.message : String(ex));
+        }
+    },
+
+    _invokeExporter: function(exporter, updateSetSysId) {
+        var methodNames = ['commitUpdateSetToGitHub'];
+        for (var i = 0; i < methodNames.length; i++) {
+            var methodName = methodNames[i];
+            if (typeof exporter[methodName] === 'function') {
+                return exporter[methodName](updateSetSysId);
+            }
+        }
+        throw new Error('UpdateSetGitHubExporter does not expose a supported export method. Expected one of: ' + methodNames.join(', '));
+    },
+
+    _jsonOk: function(result) {
+        return JSON.stringify({ ok: true, result: result });
+    },
+
+    _jsonError: function(message) {
+        return JSON.stringify({ ok: false, error: message });
+    },
+
+    type: 'UpdateSetGitHubExporterAjax'
+});]]></script><sys_class_name>sys_script_include</sys_class_name><sys_created_by>svc.spie.mcpserver</sys_created_by><sys_created_on>2026-07-25 16:28:56</sys_created_on><sys_id>590f03658392031066b576d6feaad3d1</sys_id><sys_mod_count>2</sys_mod_count><sys_name>UpdateSetGitHubExporterAjax</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_script_include_590f03658392031066b576d6feaad3d1</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-25 16:41:36</sys_updated_on></sys_script_include></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action"><sys_ui_action action="INSERT_OR_UPDATE"><action_name>deploy_to_git</action_name><active>true</active><client>true</client><client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2><comments/><condition>true</condition><form_action>true</form_action><form_button>true</form_button><form_button_v2>false</form_button_v2><form_context_menu>true</form_context_menu><form_link>true</form_link><form_menu_button_v2>false</form_menu_button_v2><form_style/><format_for_configurable_workspace>false</format_for_configurable_workspace><hint/><isolate_script>true</isolate_script><list_action>false</list_action><list_banner_button>false</list_banner_button><list_button>false</list_button><list_choice>false</list_choice><list_context_menu>false</list_context_menu><list_link>false</list_link><list_save_with_form_button>false</list_save_with_form_button><list_style/><messages/><name>Deploy to Git</name><onclick>deployToGit();</onclick><order>300</order><script><![CDATA[function deployToGit() {
+    var updateSetSysId = g_form.getUniqueValue();
+    var gm = new GlideModal('UpdateSetGitHubExporterModal');
+    gm.setTitle('Deploy to Git');
+    gm.setPreference('sysparm_update_set_sys_id', updateSetSysId);
+    gm.render();
+	
+    return false;
+}]]></script><show_insert>false</show_insert><show_multiple_update>false</show_multiple_update><show_query>false</show_query><show_update>true</show_update><sys_class_name>sys_ui_action</sys_class_name><sys_created_by>svc.spie.mcpserver</sys_created_by><sys_created_on>2026-07-25 16:37:43</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>8e0153a98392031066b576d6feaad3b0</sys_id><sys_mod_count>5</sys_mod_count><sys_name>Deploy to Git</sys_name><sys_overrides/><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_action_8e0153a98392031066b576d6feaad3b0</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-25 16:40:27</sys_updated_on><table>sys_update_set</table><ui11_compatible>true</ui11_compatible><ui16_compatible>false</ui16_compatible></sys_ui_action></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page"><sys_ui_page action="INSERT_OR_UPDATE"><category>general</category><client_script><![CDATA[(function() {
+  // ── DOM references ──────────────────────────────────────────────────────────
+  const appEl             = document.getElementById('guss-app');
+  const treeEl            = document.getElementById('guss-tree');
+  const metaEl            = document.getElementById('guss-meta');
+  const noticeEl          = document.getElementById('guss-notice');
+  const reloadBtn         = document.getElementById('guss-reload');
+  const tabsEl            = document.getElementById('guss-tabs');
+  const viewerEl          = document.getElementById('guss-viewer');
+  const workspaceEl       = document.querySelector('.guss-workspace');
+  const addBtn            = document.getElementById('guss-add-btn');
+  const addMenuEl         = document.getElementById('guss-add-menu');
+  const sidebarResizerEl  = document.getElementById('guss-sidebar-resizer');
+
+  // ── Application state ───────────────────────────────────────────────────────
+  let treeData                 = [];   // Parsed artifact tree nodes
+  let openTabs                 = [];   // Tabs currently open in the viewer
+  let activeTabKey             = '';   // Key of the currently visible tab
+  let currentUpdateSetId       = '';   // sys_id of selected update set
+  let currentUpdateSetName     = '';
+  let currentUpdateSetState    = '';
+  let currentContextUpdateSetId   = '';   // Update set that was active on load
+  let isLoadingEmptyState      = true; // True while initial data fetch is running
+  let availableUpdateSets      = [];   // All update sets fetched from server
+
+  // ── "Add New File" artifact menu config ────────────────────────────────────
+  // Loaded from sys_properties; falls back to hardcoded defaults.
+  const CREATE_ARTIFACTS_PROPERTY_NAME = 'global_update_set_studio.create_artifacts';
+  const DEFAULT_CREATE_ARTIFACTS = [
+    { label: 'Business Rule',  icon: '\u2699\ufe0f',   tableName: 'sys_script' },
+    { label: 'Script Include', icon: '\ud83d\udce6',   tableName: 'sys_script_include' },
+    { label: 'Client Script',  icon: '\ud83d\udda5\ufe0f', tableName: 'sys_script_client' },
+    { label: 'UI Policy',      icon: '\ud83d\udccb',   tableName: 'sys_ui_policy' },
+    { label: 'UI Action',      icon: '\u25b6\ufe0f',   tableName: 'sys_ui_action' },
+    { label: 'Scheduled Job',  icon: '\u23f0',         tableName: 'sysauto_script' },
+    { label: 'Fix Script',     icon: '\ud83d\udd27',   tableName: 'sys_script_fix' },
+    { label: 'UI Page',        icon: '\ud83d\udcc4',   tableName: 'sys_ui_page' },
+    { label: 'REST Message',   icon: '\ud83c\udf10',   tableName: 'sys_rest_message' },
+    { label: 'Table',          icon: '\ud83d\uddc3\ufe0f', tableName: 'sys_db_object' }
+  ];
+  let createArtifacts = DEFAULT_CREATE_ARTIFACTS.slice();
+
+  // ── Sidebar resize constants ────────────────────────────────────────────────
+  const SIDEBAR_DEFAULT_WIDTH = 330;
+  const SIDEBAR_MIN_WIDTH     = SIDEBAR_DEFAULT_WIDTH - 50;
+  const SIDEBAR_MAX_WIDTH     = SIDEBAR_DEFAULT_WIDTH + 50;
+
+  // ── Utility: inline notice bar above the tree ───────────────────────────────
+  function setNotice(text) {
+    if (!text) {
+      noticeEl.style.display = 'none';
+      noticeEl.textContent = '';
+      return;
+    }
+    noticeEl.style.display = 'block';
+    noticeEl.textContent = text;
+  }
+
+  // ── Sidebar resize: clamp and apply width via CSS custom property ───────────
+  function setSidebarWidth(widthPx) {
+    if (!appEl) return;
+    const bounded = Math.max(SIDEBAR_MIN_WIDTH, Math.min(SIDEBAR_MAX_WIDTH, widthPx));
+    appEl.style.setProperty('--guss-sidebar-width', bounded + 'px');
+  }
+
+  // Wire the drag handle so the sidebar can be resized left/right by ~50 px
+  function initSidebarResizer() {
+    if (!sidebarResizerEl || !appEl) return;
+
+    let dragging  = false;
+    let startX    = 0;
+    let startWidth = SIDEBAR_DEFAULT_WIDTH;
+
+    function onMouseMove(event) {
+      if (!dragging) return;
+      setSidebarWidth(startWidth + (event.clientX - startX));
+    }
+
+    function onMouseUp() {
+      if (!dragging) return;
+      dragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    sidebarResizerEl.addEventListener('mousedown', function(event) {
+      event.preventDefault();
+      dragging = true;
+      startX = event.clientX;
+      const rawWidth = getComputedStyle(appEl).getPropertyValue('--guss-sidebar-width').trim();
+      const parsed = parseInt(rawWidth || String(SIDEBAR_DEFAULT_WIDTH), 10);
+      startWidth = Number.isFinite(parsed) ? parsed : SIDEBAR_DEFAULT_WIDTH;
+      document.body.style.cursor = 'ew-resize';
+      document.body.style.userSelect = 'none';
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  }
+
+  // ── Utility: HTML-escape a value for safe interpolation into innerHTML ───────
+  function esc(value) {
+    return String(value || '').replace(/[&<>"']/g, function(ch) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+    });
+  }
+
+  // Returns a folder or file icon span for a tree node
+  function iconFor(node) {
+    return node.kind === 'folder'
+      ? '<span class="guss-folder-icon">\ud83d\udcc1</span>'
+      : '<span class="guss-file-icon">\ud83d\udcc4</span>';
+  }
+
+  // Remove the .guss-selected highlight from all tree rows
+  function clearSelected() {
+    document.querySelectorAll('.guss-node-row.guss-selected').forEach(function(el) {
+      el.classList.remove('guss-selected');
+    });
+  }
+
+  // ── Record URL helpers ──────────────────────────────────────────────────────
+
+  // Split a sys_update_xml.name (e.g. "sys_script_abc123...") into table + sys_id
+  function parseTargetFromName(nameValue) {
+    const raw = String(nameValue || '').trim();
+    const idx = raw.lastIndexOf('_');
+    if (idx <= 0 || idx >= raw.length - 1) return { tableName: '', targetSysId: '' };
+    const suffix = raw.substring(idx + 1);
+    if (!/^[0-9a-fA-F]{32}$/.test(suffix)) return { tableName: '', targetSysId: '' };
+    return { tableName: raw.substring(0, idx), targetSysId: suffix };
+  }
+
+  // URL to open an existing record in a frameless view
+  function buildRecordUrl(tableName, targetSysId) {
+    if (!tableName || !targetSysId) return '';
+    return '/' + tableName + '.do?sys_id=' + encodeURIComponent(targetSysId) + '&sysparm_stack=no';
+  }
+
+  // URL to open a new (blank) record form
+  function buildNewRecordUrl(tableName) {
+    if (!tableName) return '';
+    return '/' + tableName + '.do?sys_id=-1&sysparm_stack=no';
+  }
+
+  // ── "Add New File" dropdown menu ────────────────────────────────────────────
+
+  function setAddMenuOpen(isOpen) {
+    addMenuEl.style.display = isOpen ? 'block' : 'none';
+  }
+
+  // Open a tab for creating a brand-new artifact of the chosen type
+  function openCreateArtifactTab(item) {
+    const key = 'new:' + item.tableName;
+    const existing = openTabs.find(function(t) { return t.key === key; });
+    if (!existing) {
+      openTabs.push({ key: key, label: item.label, url: buildNewRecordUrl(item.tableName) });
+    }
+    activeTabKey = key;
+    renderTabs();
+    setAddMenuOpen(false);
+  }
+
+  // Build the "Add New File" dropdown from the createArtifacts config array
+  function renderAddMenu() {
+    addMenuEl.innerHTML = '';
+    const title = document.createElement('div');
+    title.className = 'guss-add-menu-title';
+    title.textContent = 'Add New File';
+    addMenuEl.appendChild(title);
+
+    if (!createArtifacts.length) {
+      const empty = document.createElement('div');
+      empty.className = 'guss-add-menu-item';
+      empty.textContent = 'No artifact types configured';
+      addMenuEl.appendChild(empty);
+      return;
+    }
+
+    createArtifacts.forEach(function(item) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'guss-add-menu-item';
+      button.innerHTML = '<span class="guss-add-menu-icon">' + esc(item.icon || '\ud83d\udcc4') + '</span><span>' + esc(item.label) + '</span>';
+      button.addEventListener('click', function(event) {
+        event.stopPropagation();
+        openCreateArtifactTab(item);
+      });
+      addMenuEl.appendChild(button);
+    });
+  }
+
+  // ── Application / update-set helpers ───────────────────────────────────────
+
+  // Normalise an app key for case-insensitive comparison ("Global" vs "global")
+
+  // Show/hide the "Make current set" button depending on whether the selected
+  // update set differs from the context that was active on page load
+  function setMakeCurrentButtonVisibility() {
+    const makeCurrentBtn = document.getElementById('guss-empty-make-current');
+    if (!makeCurrentBtn) return;
+    if (!currentContextUpdateSetId) {
+      makeCurrentBtn.style.display = 'none';
+      return;
+    }
+    const isCurrentSelection = currentUpdateSetId === currentContextUpdateSetId;
+    makeCurrentBtn.style.display = isCurrentSelection ? 'none' : 'inline-block';
+  }
+
+  // ── Empty / landing state controls ─────────────────────────────────────────
+  // Wires up the Update Set dropdown rendered in the empty state view (no tabs open).
+  function renderEmptyStateControls() {
+    const updateSetSelectEl   = document.getElementById('guss-empty-update-set');
+    const stateEl             = document.getElementById('guss-empty-state-value');
+    if (!updateSetSelectEl) return;
+
+    // Populate the update-set <select> and pre-select the current update set
+    function populateUpdateSetSelect(preferredUpdateSetId) {
+      updateSetSelectEl.innerHTML = '';
+
+      if (!availableUpdateSets.length) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No update sets available';
+        updateSetSelectEl.appendChild(option);
+        updateSetSelectEl.disabled = true;
+        currentUpdateSetId    = '';
+        currentUpdateSetName  = '';
+        currentUpdateSetState = '';
+        if (stateEl) stateEl.textContent = 'Unknown';
+        setMakeCurrentButtonVisibility();
+        return;
+      }
+
+      updateSetSelectEl.disabled = false;
+      availableUpdateSets.forEach(function(updateSet) {
+        const option = document.createElement('option');
+        option.value = updateSet.sysId;
+        option.textContent = updateSet.name;
+        updateSetSelectEl.appendChild(option);
+      });
+
+      // Keep preferred selection if it exists in the list
+      let selectedId = preferredUpdateSetId;
+      if (!selectedId || !availableUpdateSets.some(function(updateSet) { return updateSet.sysId === selectedId; })) {
+        selectedId = availableUpdateSets[0].sysId;
+      }
+      updateSetSelectEl.value = selectedId;
+
+      const selectedUpdateSet = availableUpdateSets.find(function(updateSet) { return updateSet.sysId === selectedId; }) || availableUpdateSets[0];
+      currentUpdateSetId    = selectedUpdateSet.sysId;
+      currentUpdateSetName  = selectedUpdateSet.name;
+      currentUpdateSetState = selectedUpdateSet.state || 'Unknown';
+      if (stateEl) stateEl.textContent = currentUpdateSetState || 'Unknown';
+      setMakeCurrentButtonVisibility();
+    }
+
+    // Wire up the update-set select
+    updateSetSelectEl.addEventListener('change', function() {
+      const selectedUpdateSet = availableUpdateSets.find(function(updateSet) {
+        return updateSet.sysId === updateSetSelectEl.value;
+      });
+      if (!selectedUpdateSet) return;
+
+      currentUpdateSetId    = selectedUpdateSet.sysId;
+      currentUpdateSetName  = selectedUpdateSet.name;
+      currentUpdateSetState = selectedUpdateSet.state || 'Unknown';
+      if (stateEl) stateEl.textContent = currentUpdateSetState || 'Unknown';
+      setMakeCurrentButtonVisibility();
+    });
+
+    populateUpdateSetSelect(currentUpdateSetId);
+    setMakeCurrentButtonVisibility();
+  }
+
+  // ── Tab bar and viewer ──────────────────────────────────────────────────────
+  // Renders the tab strip and the active tab's content (iframe or inline HTML).
+  // Also handles the empty/loading state when no tabs are open.
+  function renderTabs() {
+    tabsEl.innerHTML = '';
+
+    if (!openTabs.length) {
+      tabsEl.style.display = 'none';
+      if (workspaceEl) workspaceEl.style.gridTemplateRows = '1fr';
+
+      // Show spinner while the initial data fetch is still running
+      if (isLoadingEmptyState) {
+        viewerEl.innerHTML = '<div class="guss-empty guss-loading-wrap"><div class="guss-loading"><div class="guss-spinner" aria-hidden="true"></div><div class="guss-loading-text">Loading update set workspace...</div></div></div>';
+        return;
+      }
+
+      // Landing state: GUSS branding + update-set dropdown
+      viewerEl.innerHTML =
+        '<div class="guss-empty" style="display:flex; align-items:center; justify-content:center;">' +
+          '<div class="guss-empty-intro">' +
+            '<div class="guss-empty-title">GUSS</div>' +
+            '<div class="guss-empty-subtitle">Global Update Set Studio</div>' +
+            '<div class="guss-empty-divider"></div>' +
+            '<div class="guss-empty-meta">' +
+              '<div class="guss-empty-label">Update set:</div>' +
+              '<select id="guss-empty-update-set" class="guss-empty-select"></select>' +
+            '</div>' +
+            '<div class="guss-empty-meta">' +
+              '<div class="guss-empty-label">Clone set:</div>' +
+              '<select id="guss-empty-update-set" class="guss-empty-select"></select>' +
+            '</div>' +
+            '<div class="guss-empty-note"><em>Only showing global update sets that are in progress and not part of batch sets.</em></div>' +
+            '<div class="guss-empty-action-cell">' +
+              '<button id="guss-empty-make-current" class="guss-empty-action" type="button">Make current set</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      renderEmptyStateControls();
+      return;
+    }
+
+    tabsEl.style.display = 'flex';
+    if (workspaceEl) workspaceEl.style.gridTemplateRows = '52px 1fr';
+
+    // Build one tab element per open tab
+    openTabs.forEach(function(tab) {
+      const tabEl = document.createElement('div');
+      tabEl.className = 'guss-tab' + (tab.key === activeTabKey ? ' active' : '');
+      tabEl.innerHTML =
+        '<span class="guss-tab-label" title="' + esc(tab.label) + '">' + esc(tab.label) + '</span>' +
+        '<span class="guss-tab-close">\u00d7</span>';
+
+      tabEl.addEventListener('click', function(event) {
+        const closeClicked = event.target && event.target.classList && event.target.classList.contains('guss-tab-close');
+        if (closeClicked) {
+          event.stopPropagation();
+          closeTab(tab.key);
+          return;
+        }
+        activeTabKey = tab.key;
+        renderTabs();
+      });
+
+      tabsEl.appendChild(tabEl);
+    });
+
+    // Ensure activeTabKey points at a real tab
+    const active = openTabs.find(function(t) { return t.key === activeTabKey; }) || openTabs[0];
+    activeTabKey = active.key;
+
+    // Render the active tab's content area
+    if (active.url) {
+      viewerEl.innerHTML = '<iframe class="guss-iframe" src="' + esc(active.url) + '"></iframe>';
+    } else if (active.html) {
+      viewerEl.innerHTML = active.html;
+    } else {
+      viewerEl.innerHTML =
+        '<div class="guss-empty"><div class="guss-panel">' +
+          '<div style="font-weight:600; margin-bottom:10px;">' + esc(active.label) + '</div>' +
+          '<pre class="guss-muted" style="white-space:pre-wrap; margin:0;">Unable to derive target table/sys_id from this update XML record.</pre>' +
+        '</div></div>';
+    }
+  }
+
+  // ── Tab management ──────────────────────────────────────────────────────────
+
+  // Open (or switch to) a tab for an artifact file node
+  function openArtifactTab(node) {
+    const keyBase = node.tableName && node.targetSysId
+      ? (node.tableName + ':' + node.targetSysId)
+      : ('update_xml:' + node.updateXmlSysId);
+    const existing = openTabs.find(function(t) { return t.key === keyBase; });
+    if (!existing) {
+      openTabs.push({ key: keyBase, label: node.name, url: buildRecordUrl(node.tableName, node.targetSysId) });
+    }
+    activeTabKey = keyBase;
+    renderTabs();
+  }
+
+  // Open (or refresh) a tab that shows a folder's artifact list
+  function openFolderTab(node) {
+    const folderTypeName = String(node.typeName || node.name || 'Artifact Type');
+    const keyBase = 'folder:' + folderTypeName;
+    const existing = openTabs.find(function(t) { return t.key === keyBase; });
+    const folderTab = {
+      key:   keyBase,
+      label: folderTypeName,
+      url:   '',
+      html:  buildFolderDetailsHtml(node)
+    };
+
+    if (existing) {
+      // Refresh in place so stale folder data is always updated on re-click
+      existing.label = folderTab.label;
+      existing.url   = '';
+      existing.html  = folderTab.html;
+    } else {
+      openTabs.push(folderTab);
+    }
+
+    activeTabKey = keyBase;
+    renderTabs();
+  }
+
+  // Close a tab by key; activate the most-recently-opened remaining tab
+  function closeTab(tabKey) {
+    const idx = openTabs.findIndex(function(t) { return t.key === tabKey; });
+    if (idx < 0) return;
+    openTabs.splice(idx, 1);
+    if (activeTabKey === tabKey) {
+      activeTabKey = openTabs.length ? openTabs[openTabs.length - 1].key : '';
+    }
+    renderTabs();
+  }
+
+  // ── Folder detail panel ─────────────────────────────────────────────────────
+  // Builds the inline HTML shown when a folder (artifact type) tab is opened
+  function buildFolderDetailsHtml(node) {
+    const folderTitle = String(node.typeName || node.name || 'Artifact Type');
+    const children = Array.isArray(node.children) ? node.children : [];
+
+    const detailsList = children.map(function(child) {
+      const action = String(child.action || '').trim();
+      let actionLabel = '';
+      if (action) {
+        const normalizedAction = action.toUpperCase();
+        // INSERT_OR_UPDATE is the most common action; show a friendlier label
+        actionLabel = normalizedAction === 'INSERT_OR_UPDATE'
+          ? ' <em style="color:#475569;">(New or modified file)</em>'
+          : ' (' + esc(normalizedAction) + ')';
+      }
+      return '<li style="margin:0 0 10px 0;">' + esc(child.name || 'Unnamed Artifact') + actionLabel + '</li>';
+    }).join('');
+
+    const detailsBody = detailsList
+      ? '<ul style="margin:0; padding-left:22px; color:#334155; font-size:14px; line-height:1.5;">' + detailsList + '</ul>'
+      : '<div style="color:#64748b; font-size:14px;">No files found for this type in the current update set.</div>';
+
+    return '' +
+      '<div class="guss-empty" style="padding:30px 36px; background:#ffffff;">' +
+        '<div style="display:flex; align-items:center; gap:12px; color:#0f4f79;">' +
+          '<span style="font-size:28px; line-height:1;">\ud83d\udcc1</span>' +
+          '<div style="font-size:28px; font-weight:700; line-height:1.1;">' + esc(folderTitle) + '</div>' +
+        '</div>' +
+        '<div style="margin-top:16px; border:1px solid #bae6fd; background:#f0f9ff; border-radius:14px; padding:20px 24px;">' +
+          '<div style="font-size:16px; font-weight:700; letter-spacing:0.05em; color:#0369a1; margin-bottom:12px;">DETAILS</div>' +
+          detailsBody +
+        '</div>' +
+      '</div>';
+  }
+
+  // ── Tree rendering ──────────────────────────────────────────────────────────
+
+  // Recursively build a <li> element for a single tree node (folder or file)
+  function renderNode(node, parentPath) {
+    const li = document.createElement('li');
+    li.className = 'guss-node';
+
+    const row = document.createElement('div');
+    row.className = 'guss-node-row';
+    const path = parentPath ? (parentPath + '/' + node.name) : node.name;
+    row.dataset.path = path;
+
+    row.innerHTML =
+      '<span class="guss-caret">' + (node.kind === 'folder' ? '\u25b8' : '') + '</span>' +
+      iconFor(node) +
+      '<span class="guss-name" title="' + esc(node.name) + '">' + esc(node.name) + '</span>';
+
+    li.appendChild(row);
+
+    // Render child nodes inside a collapsible <ul>
+    let childrenEl = null;
+    if (node.children && node.children.length) {
+      childrenEl = document.createElement('ul');
+      childrenEl.className = 'guss-children';
+      childrenEl.style.display = 'none';
+      node.children.forEach(function(child) {
+        childrenEl.appendChild(renderNode(child, path));
+      });
+      li.appendChild(childrenEl);
+    }
+
+    // Toggle open/closed state of a folder node
+    function setFolderOpen(isOpen) {
+      node.open = !!isOpen;
+      if (node.kind === 'folder') {
+        const caret = row.querySelector('.guss-caret');
+        if (caret) caret.textContent = node.open ? '\u25be' : '\u25b8';
+      }
+      if (childrenEl) childrenEl.style.display = node.open ? 'block' : 'none';
+    }
+
+    if (node.kind === 'folder') setFolderOpen(!!node.open);
+
+    // Clicking the caret toggles the folder without opening the tab
+    const caretEl = row.querySelector('.guss-caret');
+    if (node.kind === 'folder' && caretEl) {
+      caretEl.addEventListener('click', function(event) {
+        event.stopPropagation();
+        setFolderOpen(!node.open);
+      });
+    }
+
+    // Clicking the row opens the appropriate tab (folder detail or artifact record)
+    row.addEventListener('click', function(event) {
+      event.stopPropagation();
+      clearSelected();
+      row.classList.add('guss-selected');
+
+      if (node.kind === 'folder') {
+        openFolderTab(node);
+        return;
+      }
+
+      openArtifactTab(node);
+    });
+
+    return li;
+  }
+
+  // Clear and re-render the entire sidebar tree from treeData
+  function renderTree() {
+    treeEl.innerHTML = '';
+    if (!treeData.length) {
+      const empty = document.createElement('li');
+      empty.className = 'guss-node';
+      empty.innerHTML = '<div class="guss-node-row"><span class="guss-name guss-muted">No artifacts found in current update set.</span></div>';
+      treeEl.appendChild(empty);
+      return;
+    }
+
+    treeData.forEach(function(node) {
+      treeEl.appendChild(renderNode(node, ''));
+    });
+  }
+
+  // ── Data fetching ───────────────────────────────────────────────────────────
+
+  // Thin fetch wrapper that attaches the SN user token and parses JSON
+  async function fetchJson(url) {
+    const headers = { 'Accept': 'application/json', 'Content-Type': 'application/json' };
+    if (window.GUSS_CONTEXT.userToken) headers['X-UserToken'] = window.GUSS_CONTEXT.userToken;
+    const response = await fetch(url, { method: 'GET', headers: headers, credentials: 'same-origin' });
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error('HTTP ' + response.status + ' while reading ' + url + ': ' + text);
+    }
+    return response.json();
+  }
+
+  // Parse and validate the JSON array stored in the sys_properties artifact config.
+  // Falls back to DEFAULT_CREATE_ARTIFACTS if the value is missing or malformed.
+  function normalizeCreateArtifacts(configValue) {
+    if (!configValue) return DEFAULT_CREATE_ARTIFACTS.slice();
+
+    let parsed;
+    try {
+      parsed = JSON.parse(configValue);
+    } catch (error) {
+      return DEFAULT_CREATE_ARTIFACTS.slice();
+    }
+
+    if (!Array.isArray(parsed)) return DEFAULT_CREATE_ARTIFACTS.slice();
+
+    const normalized = parsed
+      .map(function(item) {
+        if (!item || typeof item !== 'object') return null;
+        const label     = String(item.label     || '').trim();
+        const tableName = String(item.tableName || '').trim();
+        const icon      = String(item.icon      || '').trim();
+        if (!label || !tableName) return null;
+        return { label: label, tableName: tableName, icon: icon || '\ud83d\udcc4' };
+      })
+      .filter(function(item) { return !!item; });
+
+    return normalized.length ? normalized : DEFAULT_CREATE_ARTIFACTS.slice();
+  }
+
+  // Fetch the artifact menu config from sys_properties
+  async function loadCreateArtifactsConfig() {
+    const query  = encodeURIComponent('name=' + CREATE_ARTIFACTS_PROPERTY_NAME + '^ORDERBYDESCsys_updated_on');
+    const fields = encodeURIComponent('value');
+    const url = '/api/now/table/sys_properties?sysparm_display_value=false&sysparm_exclude_reference_link=true&sysparm_query=' + query + '&sysparm_fields=' + fields + '&sysparm_limit=1';
+
+    try {
+      const data    = await fetchJson(url);
+      const records = Array.isArray(data.result) ? data.result : [];
+      const rawValue = records.length ? String(records[0].value || '') : '';
+      createArtifacts = normalizeCreateArtifacts(rawValue);
+    } catch (error) {
+      createArtifacts = DEFAULT_CREATE_ARTIFACTS.slice();
+    }
+  }
+
+  // Fetch name, state, and application for a single update set
+  async function loadUpdateSetInfo(updateSetId) {
+    const url = '/api/now/table/sys_update_set/' + encodeURIComponent(updateSetId) + '?sysparm_display_value=false&sysparm_exclude_reference_link=true&sysparm_fields=name,state,application';
+    const data = await fetchJson(url);
+    const result = data.result || {};
+    const applicationRef  = String(result.application || '').trim();
+    let applicationName   = applicationRef || 'Global';
+    let applicationScope  = 'Unknown';
+
+    // If the application field looks like a sys_id, resolve its display name
+    function looksLikeSysId(value) {
+      return /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(value) ||
+             /^[0-9a-fA-F]{32}$/.test(value);
+    }
+
+    if (looksLikeSysId(applicationRef)) {
+      try {
+        const appUrl  = '/api/now/table/sys_scope/' + encodeURIComponent(applicationRef) + '?sysparm_display_value=false&sysparm_exclude_reference_link=true&sysparm_fields=name,scope';
+        const appData = await fetchJson(appUrl);
+        const appResult = appData.result || {};
+        applicationName  = appResult.name  || applicationName;
+        applicationScope = appResult.scope || applicationScope;
+      } catch (error) {
+        applicationName  = applicationName || 'Global';
+        applicationScope = 'Unknown';
+      }
+    }
+
+    return {
+      applicationId: applicationRef,
+      application:   applicationName,
+      scope:         applicationScope,
+      updateSetId:   updateSetId,
+      name:          result.name  || updateSetId,
+      state:         result.state || 'Unknown'
+    };
+  }
+
+  // Fetch all global-scope applications from sys_scope
+
+  // Fetch all update sets (every state) from sys_update_set
+  async function loadUpdateSets() {
+    const query  = encodeURIComponent('application=global^state=in progress^parent=NULL^base_update_set=NULL^ORDERBYname');
+    const fields = encodeURIComponent('sys_id,name,state');
+    const url = '/api/now/table/sys_update_set?sysparm_display_value=false&sysparm_exclude_reference_link=true&sysparm_query=' + query + '&sysparm_fields=' + fields + '&sysparm_limit=10000';
+    const data = await fetchJson(url);
+    const records = Array.isArray(data.result) ? data.result : [];
+    return records
+      .map(function(record) {
+        return {
+          sysId: String(record.sys_id || '').trim(),
+          name:  String(record.name   || '').trim() || 'Unnamed Update Set',
+          state: String(record.state  || '').trim() || 'Unknown'
+        };
+      })
+      .filter(function(record) { return record.sysId; })
+      .sort(function(a, b) { return a.name.localeCompare(b.name); });
+  }
+
+  // Fetch all sys_update_xml records for a given update set
+  async function loadArtifacts(updateSetId) {
+    const query  = encodeURIComponent('update_set=' + updateSetId + '^ORDERBYtype^ORDERBYtarget_name');
+    const fields = encodeURIComponent('sys_id,type,target_name,name,action');
+    const url = '/api/now/table/sys_update_xml?sysparm_display_value=true&sysparm_exclude_reference_link=true&sysparm_limit=10000&sysparm_query=' + query + '&sysparm_fields=' + fields;
+    const data = await fetchJson(url);
+    return Array.isArray(data.result) ? data.result : [];
+  }
+
+  // ── Tree data model ─────────────────────────────────────────────────────────
+
+  // Determine a human-readable label for an artifact: prefer target_name, then
+  // strip the leading table prefix from the sys_update_xml name
+  function normalizeLabel(record) {
+    const target = String(record.target_name || '').trim();
+    if (target) return target;
+    const name = String(record.name || '').trim();
+    if (!name) return String(record.sys_id || 'Unnamed Artifact');
+    const segments = name.split('_');
+    return segments.length > 1 ? segments.slice(1).join('_') : name;
+  }
+
+  // Group raw artifact records into a folder-per-type tree structure
+  function buildTree(records) {
+    const byType = new Map();
+    records.forEach(function(rec) {
+      const typeName = String(rec.type || 'Unknown Type').trim() || 'Unknown Type';
+      if (!byType.has(typeName)) byType.set(typeName, []);
+      const parsed = parseTargetFromName(rec.name || '');
+      byType.get(typeName).push({
+        kind:          'file',
+        name:          normalizeLabel(rec),
+        tableName:     parsed.tableName,
+        targetSysId:   parsed.targetSysId,
+        updateXmlSysId: rec.sys_id || '',
+        action:        rec.action || ''
+      });
+    });
+
+    return Array.from(byType.entries())
+      .sort(function(a, b) { return a[0].localeCompare(b[0]); })
+      .map(function(entry) {
+        const typeName = entry[0];
+        const children = entry[1].sort(function(a, b) { return a.name.localeCompare(b.name); });
+        return {
+          kind:      'folder',
+          name:      typeName + ' (' + children.length + ')',
+          typeName:  typeName,
+          fileCount: children.length,
+          open:      false,
+          children:  children
+        };
+      });
+  }
+
+  // ── Main load orchestration ─────────────────────────────────────────────────
+  // Fetches all data in parallel and rebuilds the tree and meta bar.
+  // Called on initial load and whenever the user clicks Reload.
+  async function loadTree() {
+    try {
+      setNotice('');
+      isLoadingEmptyState = true;
+      if (!openTabs.length) renderTabs(); // Show spinner immediately
+
+      await loadCreateArtifactsConfig();
+      renderAddMenu();
+
+      const updateSetId = String(window.GUSS_CONTEXT.updateSetId || '').trim();
+      if (!updateSetId) {
+        metaEl.textContent = 'No current update set selected.';
+        currentUpdateSetId    = '';
+        currentUpdateSetName  = '';
+        currentUpdateSetState = '';
+        availableUpdateSets   = [];
+        treeData = [];
+        renderTree();
+        isLoadingEmptyState = false;
+        if (!openTabs.length) renderTabs();
+        setNotice('Unable to resolve current update set.');
+        return;
+      }
+
+      metaEl.textContent = 'Loading update set ' + updateSetId + '...';
+
+      // Kick off all three fetches in parallel
+      const loaded = await Promise.all([
+        loadUpdateSetInfo(updateSetId),
+        loadArtifacts(updateSetId),
+        loadUpdateSets()
+      ]);
+      const updateSetInfo = loaded[0];
+      const artifacts     = loaded[1];
+      const updateSets    = loaded[2];
+
+      availableUpdateSets = updateSets;
+
+      currentUpdateSetId    = updateSetInfo.updateSetId;
+      currentUpdateSetName  = updateSetInfo.name;
+      currentUpdateSetState = updateSetInfo.state;
+
+      // Snapshot context so "Make current set" can detect divergence
+      currentContextUpdateSetId = currentUpdateSetId;
+
+      treeData = buildTree(artifacts);
+      renderTree();
+
+      metaEl.textContent = updateSetInfo.name + ' \u2022 ' + artifacts.length + ' artifact(s)';
+      isLoadingEmptyState = false;
+      if (!openTabs.length) renderTabs();
+
+    } catch (error) {
+      currentUpdateSetId    = '';
+      currentUpdateSetName  = '';
+      currentUpdateSetState = '';
+      availableUpdateSets   = [];
+      treeData = [];
+      renderTree();
+      metaEl.textContent = 'Failed to load update set artifacts';
+      isLoadingEmptyState = false;
+      if (!openTabs.length) renderTabs();
+      setNotice('Failed to load artifacts. Check ACLs for sys_update_set and sys_update_xml.');
+    }
+  }
+
+  // ── Event listeners and startup ─────────────────────────────────────────────
+
+  // Toggle the "Add New File" dropdown
+  addBtn.addEventListener('click', function(event) {
+    event.stopPropagation();
+    setAddMenuOpen(addMenuEl.style.display === 'none');
+  });
+
+  // Close the dropdown when clicking anywhere outside it
+  document.addEventListener('click', function(event) {
+    if (!addMenuEl.contains(event.target) && event.target !== addBtn) {
+      setAddMenuOpen(false);
+    }
+  });
+
+  reloadBtn.addEventListener('click', loadTree);
+  initSidebarResizer();
+  setSidebarWidth(SIDEBAR_DEFAULT_WIDTH);
+  renderTabs();
+  loadTree();
+
+  // Handle "Make Current Set" button click
+  document.addEventListener('click', function(event) {
+    if (event.target && event.target.id === 'guss-empty-make-current') {
+      event.preventDefault();
+      makeCurrentSet();
+    }
+  });
+
+  // Make the selected update set the current set for this user
+  function makeCurrentSet() {
+    if (!currentUpdateSetId) {
+      alert('No update set selected');
+      return;
+    }
+
+    var sessionToken = window.GUSS_CONTEXT && window.GUSS_CONTEXT.userToken;
+    if (!sessionToken) {
+      alert('Unable to load the ServiceNow session token.');
+      return;
+    }
+
+    var body = [
+      'sysparm_processor=UpdateSetAjax',
+      'sysparm_type=changeUpdateSet',
+      'sysparm_value=' + encodeURIComponent(currentUpdateSetId),
+      'sysparm_ck=' + encodeURIComponent(sessionToken)
+    ].join('&');
+
+    fetch('/xmlhttp.do', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'X-UserToken': sessionToken
+      },
+      body: body
+    })
+      .then(function(response) {
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+        return response.text();
+      })
+      .then(function() {
+        var nav = (window.parent && window.parent.g_navigation) || (window.top && window.top.g_navigation) || window.g_navigation;
+        if (nav && typeof nav.reloadWindow === 'function') {
+          nav.reloadWindow();
+        } else {
+          window.location.reload();
+        }
+      })
+      .catch(function(error) {
+        alert('Failed to set current update set: ' + error.message);
+      });
+  }
+})();
+]]></client_script><description>Landing page for Global Update Set Studio.</description><direct>true</direct><endpoint/><html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:g2="glide-2">
+
+ <link href="508f6ce683a287d066b576d6feaad381.cssdbx" rel="stylesheet" type="text/css" />
+
+<script>
+window.GUSS_CONTEXT = {
+  updateSetId: "$[gs.getPreference('sys_update_set')]",
+  userToken: "$[gs.getSessionToken()]"
+};
+</script>
+
+<div id="guss-app" class="guss-app">
+  <aside class="guss-sidebar">
+    <div class="guss-sidebar-head">
+      <div class="guss-section-title">Update Set Files</div>
+      <button id="guss-add-btn" class="guss-add-btn" type="button" aria-label="Add new artifact">+</button>
+      <div id="guss-add-menu" class="guss-add-menu" style="display:none;"></div>
+    </div>
+    <div id="guss-notice" class="guss-notice"></div>
+    <ul id="guss-tree" class="guss-tree"></ul>
+  </aside>
+  <div id="guss-sidebar-resizer" class="guss-resizer" role="separator" aria-orientation="vertical" aria-label="Resize sidebar"></div>
+
+  <main class="guss-main">
+    <div class="guss-topbar">
+      <div class="guss-title"><!-- This space intentionally left blank --></div>
+      <div class="guss-topbar-actions">
+        <span id="guss-meta" class="guss-meta">Loading current update set...</span>
+        <button id="guss-reload" class="guss-btn" type="button">Reload</button>
+      </div>
+    </div>
+    <section class="guss-workspace">
+      <div id="guss-tabs" class="guss-tabs"></div>
+      <div id="guss-viewer" class="guss-viewer"></div>
+    </section>
+  </main>
+</div>
+
+</j:jelly>]]></html><name>GUSS</name><processing_script/><sys_class_name>sys_ui_page</sys_class_name><sys_created_by>svc.spie.mcpserver</sys_created_by><sys_created_on>2026-08-07 23:50:39</sys_created_on><sys_id>6ec0bbb583a2cf9066b576d6feaad3be</sys_id><sys_mod_count>72</sys_mod_count><sys_name>GUSS</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_page_6ec0bbb583a2cf9066b576d6feaad3be</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-08-20 20:45:59</sys_updated_on></sys_ui_page><sys_es_latest_script action="INSERT_OR_UPDATE"><id>6ec0bbb583a2cf9066b576d6feaad3be</id><sys_created_by>admin</sys_created_by><sys_created_on>2026-08-09 18:01:20</sys_created_on><sys_id>0d04bc6a83a287d066b576d6feaad302</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-08-09 18:01:20</sys_updated_on><table>sys_ui_page</table><use_es_latest>true</use_es_latest></sys_es_latest_script></record_update>
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page"><sys_ui_page action="INSERT_OR_UPDATE"><category>general</category><client_script><![CDATA[var USGE = {
+    close: function() {
+        var gm = GlideModal.get();
+        if (gm) gm.destroy();
+    },
+
+    setStatus: function(msg, isError) {
+        var el = document.getElementById('usge_status');
+        if (!el) return;
+        el.style.color = isError ? '#b10e1e' : '#0b5';
+        el.textContent = msg;
+    },
+
+    deploy: function() {
+        var gm = GlideModal.get();
+        var updateSetSysId = gm ? gm.getPreference('sysparm_update_set_sys_id') : '';
+        if (!updateSetSysId) {
+            this.setStatus('Missing update set sys_id.', true);
+            return;
+        }
+
+        this.setStatus('Deploy request in progress...', false);
+
+        var ga = new GlideAjax('UpdateSetGitHubExporterAjax');
+        ga.addParam('sysparm_name', 'exportUpdateSet');
+        ga.addParam('sysparm_update_set_sys_id', updateSetSysId);
+        ga.getXMLAnswer(function(answer) {
+            var payload;
+            try {
+                payload = answer ? JSON.parse(answer) : {
+                    ok: false,
+                    error: 'Empty response from server.'
+                };
+            } 
+			catch (e) {
+                payload = {
+                    ok: false,
+                    error: 'Invalid JSON response from server: ' + String(answer)
+                };
+            }
+
+        if (payload.ok && payload.result && payload.result.success) {
+                USGE.setStatus('Deploy completed successfully.', false);
+            } else {
+                var deployError = payload.error || (payload.result && payload.result.error) || 'Unknown error';
+                USGE.setStatus('Deploy failed: ' + deployError, true);
+            }
+        });
+    }
+};]]></client_script><description>Used for Deploy to Git UI Action</description><direct>false</direct><endpoint/><html><![CDATA[<j:jelly xmlns:j="jelly:core" xmlns:g="glide">
+<div style="padding:16px; font-family:Arial, sans-serif; min-width:420px;">
+  <p style="margin:0 0 12px 0;">This will run UpdateSetGitHubExporter for the current update set.</p>
+  <div id="usge_status" style="margin:8px 0 12px 0;"></div>
+  <div style="display:flex; gap:8px; justify-content:flex-end;">
+    <button class="btn btn-default" type="button" onclick="USGE.close()">Cancel</button>
+    <button class="btn btn-primary" type="button" onclick="USGE.deploy()">Deploy to Git</button>
+  </div>
+</div>
+</j:jelly>]]></html><name>UpdateSetGitHubExporterModal</name><processing_script/><sys_class_name>sys_ui_page</sys_class_name><sys_created_by>svc.spie.mcpserver</sys_created_by><sys_created_on>2026-07-25 16:37:43</sys_created_on><sys_id>75011b658392031066b576d6feaad370</sys_id><sys_mod_count>4</sys_mod_count><sys_name>UpdateSetGitHubExporterModal</sys_name><sys_package display_value="Global" source="global">global</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sys_ui_page_75011b658392031066b576d6feaad370</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-25 22:13:21</sys_updated_on></sys_ui_page><sys_es_latest_script action="INSERT_OR_UPDATE"><id>75011b658392031066b576d6feaad370</id><sys_created_by>admin</sys_created_by><sys_created_on>2026-07-25 16:51:04</sys_created_on><sys_id>a5141f2183d2031066b576d6feaad3c1</sys_id><sys_mod_count>0</sys_mod_count><sys_updated_by>admin</sys_updated_by><sys_updated_on>2026-07-25 16:51:04</sys_updated_on><table>sys_ui_page</table><use_es_latest>true</use_es_latest></sys_es_latest_script></record_update>
+</unload>
