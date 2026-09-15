@@ -1243,11 +1243,11 @@ window.GUSS_CONTEXT = {
                 };
             }
 
-            if (payload.ok) {
-                USGE.setStatus('Deploy started successfully.', false);
-            } 
-			else {
-                USGE.setStatus('Deploy failed: ' + (payload.error || 'Unknown error'), true);
+        if (payload.ok && payload.result && payload.result.success) {
+                USGE.setStatus('Deploy completed successfully.', false);
+            } else {
+                var deployError = payload.error || (payload.result && payload.result.error) || 'Unknown error';
+                USGE.setStatus('Deploy failed: ' + deployError, true);
             }
         });
     }
