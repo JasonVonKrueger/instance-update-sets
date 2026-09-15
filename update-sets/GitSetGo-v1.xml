@@ -281,7 +281,7 @@ UpdateSetGitHubExporterAjax.prototype = Object.extendsObject(global.AbstractAjax
     },
 
     _invokeExporter: function(exporter, updateSetSysId) {
-        var methodNames = ['exportUpdateSet', 'export', 'run', 'process'];
+        var methodNames = ['commitUpdateSetToGitHub'];
         for (var i = 0; i < methodNames.length; i++) {
             var methodName = methodNames[i];
             if (typeof exporter[methodName] === 'function') {
